@@ -1,0 +1,217 @@
+* {
+	margin : 0;
+	padding : 0;
+	font-family : Arial;
+}
+
+body {
+	position : absolute;
+	top : 0;
+	left : 0;
+	right : 0;
+	bottom : 0;
+	margin: 0;
+	padding: 0;
+	background-color: #202020;
+	width : 100%;
+	height : auto;
+}
+
+canvas {
+	position : absolute;
+	top : 0;
+	left : 250px;
+}
+
+div#leftpanel {
+	position : absolute;
+	top : 0;
+	left : 0;
+	bottom : 200px;
+	width : 250px;
+	background-color : #CCCCCC;
+	overflow : hidden;
+}
+
+div#leftpanel div#properties input[type='text'],
+div#leftpanel div#comp-properties input[type='text'] {
+	width : 50px;
+}
+
+div#leftpanel div#comp-properties {
+	margin-top : 50px;
+}
+
+div#leftpanel div#fileButtons {
+	position : absolute;
+	bottom : 1px;
+}
+
+div#rightpanel {
+	position : absolute;
+	top : 0;
+	right : 0;
+	bottom : 200px;
+	width : 250px;
+	background-color : #CCCCCC;
+	overflow : hidden;
+}
+
+div#rightpanel div#spritesheets {
+	position : absolute;
+	top : 0;
+	left : 0;
+	right : 0;
+	bottom : 50px;
+	overflow : auto;
+}
+
+div#rightpanel div#spritesheets div.sprite {
+	float : left;
+	margin : 0 0 1px 1px;
+}
+
+div#rightpanel div#uploadform {
+	position : absolute;
+	left : 0;
+	right : 0;
+	bottom : 0;
+	height : 50px;
+}
+
+div#rightpanel div#uploadform input[type='text'] {
+	width : 50px;
+}
+
+div#timeline {
+	position : absolute;
+	left : 0;
+	right : 0;
+	bottom : 0;
+	height : 200px;
+	background-color : #CCCCCC;
+	border-top : 1px solid black;
+	overflow : hidden;
+}
+
+div#timeline div.listing {
+	position : absolute;
+	top : 0;
+	left : 0;
+	bottom : 0;
+	width : 250px;
+	border-right : 1px solid black;
+}
+
+div#timeline div.listing div.buttons {
+	border-bottom : 1px solid black;
+}
+
+div#timeline div.listing div.animator div.name {
+	position : relative;
+}
+
+div#timeline div.listing div.animator div.name {
+	position : relative;
+	padding-left : 5px;
+	border-bottom : 1px solid black;
+}
+
+div#timeline div.listing div.animator div.name:hover {
+	cursor : pointer;
+}
+
+div#timeline div.listing div.animator.selected div.name {
+	color : #EEEEEE;
+	background : #666666;
+}
+
+div#timeline div.timeline div.timeline-frame div.indicator {
+	position : absolute;
+	left : -4px;
+	color : red;
+	font-size : 18px;
+	font-weight : bold;
+}
+
+div#timeline div.timeline {
+	position : absolute;
+	top : 0;
+	left : 250px;
+	right : 0;
+	bottom : 0;
+	overflow : auto;
+}
+
+div#timeline div.timeline div.timeline-cursor {
+	position : absolute;
+	top : 0;
+	bottom : 0;
+	border-right : 1px solid #CC3333;
+	width : 1px;
+}
+
+div#timeline div.timeline div.timeline-frame {
+	position : absolute;
+	top : 0;
+	bottom : 0;
+	border-right : 1px solid #999999;
+	width : 1px;
+}
+
+div#popin {
+	text-decoration : none;
+	color : white;
+}
+
+div#popin.load {
+	position : absolute;
+	top : 50%;
+	left : 50%;
+	width : 300px;
+	height : 400px;
+	margin-top : -300px;
+	margin-left : -150px;
+	background-color : black;
+	z-index : 10;
+	display : none;
+	overflow : auto;
+}
+
+div#popin.load ul {
+	margin : 0;
+	padding : 0;
+	list-style-type : none;
+	cursor : pointer;
+}
+
+div#popin.load ul li {
+	font-size : 24px;
+	margin : 10px 10px 0px 10px;
+	color : #CCCCCC;
+}
+
+div#popin.load ul li:hover {
+	color : white;
+}
+
+div#popin.export {
+	position : absolute;
+	top : 50%;
+	left : 50%;
+	width : 300px;
+	height : 100px;
+	margin-top : -150px;
+	margin-left : -150px;
+	background-color : black;
+	z-index : 10;
+	display : none;
+}
+
+div#popin.export p {
+	position : relative;
+	width : 280;
+	margin : 30px auto;
+	font-size : 24px;
+	text-align : center;
+}

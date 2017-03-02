@@ -1,0 +1,117 @@
+{
+	"fps" : 30,
+	"loop" : true,
+	"length" : 60,
+	"animators" : [
+		{
+			"name" : "body",
+			"textures" : [
+				0, 1, 2
+			],
+			"spritesheets" : [
+				{
+					"file" : "images/name.png",
+					"tilewidth" : 64,
+					"tileheight" : 64,
+					"imagewidth" : 512,
+					"imageheight" : 64,
+					"firstindex" : 0
+				}
+			],
+			"timeline" : [
+				{
+					"texture" : 0,
+					"blendmode" : "NORMAL",
+					"pivot" : {"x" : 0, "y" : 0},
+					"position" : {"x" : 64, "y" : 64},
+					"rotation" : 0,
+					"scale" : {"x" : 1, "y" : 1},
+					"alpha" : 1
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				{
+					"texture" : 1
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				{
+					"position" : {"x" : 128, "y" : 128}
+				},
+				null,
+				null,
+				null,
+				null,
+				{
+					"texture" : 2
+				},
+				null,
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"name" : "head",
+			"textures" : [
+				3, 1, 2
+			],
+			"spritesheets" : [
+				{
+					"file" : "images/name.png",
+					"tilewidth" : 64,
+					"tileheight" : 64,
+					"imagewidth" : 512,
+					"imageheight" : 64,
+					"firstindex" : 0
+				}
+			],
+			"timeline" : [
+				{
+					"texture" : 3,
+					"position" : {"x" : 256, "y" : 64},
+					"rotation" : 0,
+					"scale" : {"x" : 1, "y" : 1},
+					"alpha" : 1
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				{
+					"texture" : 1
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				{
+					"position" : {"x" : 192, "y" : 128}
+				},
+				null,
+				null,
+				null,
+				null,
+				{
+					"texture" : 2
+				},
+				null,
+				null,
+				null,
+				null,
+				null
+			]
+		}
+	]
+}

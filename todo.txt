@@ -1,0 +1,11 @@
+TODO
+X - Change frame amount in timeline
+X - Zoom In/Out timeline
+X - Update viewport size with windows
+
+	- Tools (toolbox)
+	- Add particles
+
+TOFIX
+X - check compositor name on save and load
+X - addIndicator before changing frame

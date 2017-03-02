@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>PIXI Animator</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+
+	<body>
+		<div id="leftpanel">
+			<div id="properties">
+				<h2 class="name"></h2>
+				<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
+				<div class="blend_mode">Blend Mode: 
+					<select id="blend_mode">
+						<option value=""></option>
+					</select>
+				</div>
+				<div class="pivot">Pivot: X <input id="pivot-x" type="text" /> Y <input id="pivot-y" type="text" /></div>
+				<div class="position">Position: X <input id="position-x" type="text" /> Y <input id="position-y" type="text" /></div>
+				<div class="rotation">Rotation: <input id="rotation" type="text" /></div>
+				<div class="scale">Scale: X <input id="scale-x" type="text" /> Y <input id="scale-y" type="text" /></div>
+				<div class="alpha">Alpha: <input id="alpha" type="text" /></div>
+			</div>
+			<div id="comp-properties">
+				<div class="framerate">Framerate: <input id="framerate" type="text" /></div>
+				<div class="loop">Loop: <input id="loop" type="checkbox" /></div>
+				<div class="length">Frame count: <input id="length" type="text" /></div>
+			</div>
+			<div id="tools"></div>
+			<div id="fileButtons">
+				<button class="new">New</button>
+				<button class="load">Load</button>
+				<button class="save">Save</button>
+				<button class="export">Export</button>
+			</div>
+		</div>
+		<div id="rightpanel">
+			<div id="spritesheets"></div>
+			<div id="uploadform">
+				<input id="spritesheet-file" type="file" />
+				W <input id="spritesheet-width" type="text" value="64" />
+				H <input id="spritesheet-height" type="text" value="64" />
+				<button id="spritesheet-load">Load</button>
+			</div>
+		</div>
+		<div id="timeline">
+			<div class="listing">
+				<div class="buttons">
+					<button class="add">+</button>
+					<button class="remove">-</button>
+					<button class="play">&#9658;</button>
+					<input class="zoom" type="range" min="1" max="8" value="1" step="0.25" />
+				</div>
+			</div>
+			<div class="timeline">
+				<div class="framebars"></div>
+				<div class="timeline-cursor"></div>
+			</div>
+		</div>
+
+		<div id="popin"></div>
+
+		<script src="source/libs/parameters.js"></script>
+		<script src="source/libs/generic/ajax.js"></script>
+		<script src="source/libs/generic/loader.js"></script>
+		<script src="source/libs/generic/controls.js"></script>
+		<script src="source/libs/generic/timer.js"></script>
+		<script src="source/libs/pixi/pixi.js"></script>
+		<script src="source/libs/pixi/compositor.js"></script>
+		<script src="source/libs/pixi/button.js"></script>
+		<script src="source/libs/pixi/textbox.js"></script>
+		<script src="source/libs/pixi/dialog.js"></script>
+		<script src="source/libs/pixi/collider.js"></script>
+		<script src="source/libs/pixi/animator.js"></script>
+		<script src="source/viewport.js"></script>
+		<script src="source/timeline.js"></script>
+		<script src="source/leftpanel.js"></script>
+		<script src="source/rightpanel.js"></script>
+		<script src="source/editor.js"></script>
+	</body>
+</html>
