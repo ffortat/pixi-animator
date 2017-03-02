@@ -71,7 +71,7 @@ function updateViewport(data) {
 
 	if (typeof(data.pivot.x) === 'number') {
 		pivot.lineStyle(2, 0x00FF00, 1);
-		pivot.drawCircle(renderer.width / 2 + data.pivot.x, renderer.height / 2 + data.pivot.y, 5);
+		pivot.drawCircle(data.pivot.x, data.pivot.y, 5);
 	}
 }
 
