@@ -1,11 +1,28 @@
 TODO
-X - Change frame amount in timeline
-X - Zoom In/Out timeline
-X - Update viewport size with windows
-
-	- Tools (toolbox)
+	- Test library for particles with testfile
 	- Add particles
 
-TOFIX
-X - check compositor name on save and load
-X - addIndicator before changing frame
+	- Tools (toolbox)
+		- Select
+		- Move (ctrl click)
+		- Move pivot (-->offset) (middle click)
+		- Rotate (Alt click)
+		- Scale (shift click)
+		- Move viewport (Space + click)
+		- Zoom (scroll) (reset : ctrl + click molette)
+		- Move indicator in timeline
+		- shortcut next/previous frame
+	- set cursors for tools (arrows for move, crosshair for move pivot)
+
+	- Add frame around sprite in viewport (survol ou permanent)
+	- Rework pivot / position (pivot should follow position)
+	- rename pivot to offset
+
+	- sprite interpolation (dynamic)
+		- add indicator on which frame change (i grey ?)
+	- interpolation (%age ?) --> génère courbe
+		- linear
+		- acceleration
+		- deceleration
+		- square (?)
+	- Save as

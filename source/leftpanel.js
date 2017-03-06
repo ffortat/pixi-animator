@@ -14,7 +14,7 @@ function updateFrame(frame, force) {
 
 		if (currentElement) {
 			propertiesData = {
-				name : currentElement.animator.name,
+				name : currentElement.element.name,
 				texture : null,
 				blendmode : null,
 				pivot : null,
@@ -25,7 +25,7 @@ function updateFrame(frame, force) {
 			};
 
 			for (var i = currentFrame; i >= 0; i -= 1) {
-				var frameData = currentElement.animator.timeline[i];
+				var frameData = currentElement.element.timeline[i];
 
 				if (frameData) {
 					var set = true;
@@ -195,14 +195,14 @@ function UseTexture(event) {
 	var id = parseInt(event.target.id.substr(event.target.id.indexOf('-') + 1));
 
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].texture = id;
+		currentElement.element.timeline[currentFrame].texture = id;
 
-		if (currentElement.animator.textures.indexOf(id) === -1) {
-			currentElement.animator.textures.push(id);
+		if (currentElement.element.textures.indexOf(id) === -1) {
+			currentElement.element.textures.push(id);
 		}
 
 		refreshCompositor();
@@ -214,11 +214,11 @@ function UseTexture(event) {
 
 function SetBlendMode(event) {
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].blendmode = properties.blendmode.value;
+		currentElement.element.timeline[currentFrame].blendmode = properties.blendmode.value;
 
 		refreshCompositor();
 	
@@ -229,11 +229,11 @@ function SetBlendMode(event) {
 
 function SetPivot(point) {
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].pivot = {
+		currentElement.element.timeline[currentFrame].pivot = {
 			x : point.x,
 			y : point.y
 		};
@@ -247,11 +247,11 @@ function SetPivot(point) {
 
 function SetPosition(point) {
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].position = {
+		currentElement.element.timeline[currentFrame].position = {
 			x : point.x,
 			y : point.y
 		};
@@ -265,11 +265,11 @@ function SetPosition(point) {
 
 function SetRotation(event) {
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].rotation = parseFloat(properties.rotation.value);
+		currentElement.element.timeline[currentFrame].rotation = parseFloat(properties.rotation.value);
 
 		refreshCompositor();
 	
@@ -280,11 +280,11 @@ function SetRotation(event) {
 
 function SetScale(point) {
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].scale = {
+		currentElement.element.timeline[currentFrame].scale = {
 			x : point.x,
 			y : point.y
 		};
@@ -298,11 +298,11 @@ function SetScale(point) {
 
 function SetAlpha(event) {
 	if (currentElement) {
-		if (!currentElement.animator.timeline[currentFrame]) {
-			currentElement.animator.timeline[currentFrame] = {};
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
 		}
 
-		currentElement.animator.timeline[currentFrame].alpha = parseFloat(properties.alpha.value);
+		currentElement.element.timeline[currentFrame].alpha = parseFloat(properties.alpha.value);
 
 		refreshCompositor();
 	
@@ -313,7 +313,7 @@ function SetAlpha(event) {
 
 function ResetValue(event) {
 	if (currentElement) {
-		var frame = currentElement.animator.timeline[currentFrame];
+		var frame = currentElement.element.timeline[currentFrame];
 		var changed = false;
 
 		if (frame) {
@@ -371,7 +371,7 @@ function ResetValue(event) {
 					frame.alpha === undefined) {
 
 					removeIndicator(currentElement, currentFrame);
-					currentElement.animator.timeline[currentFrame] = undefined;
+					currentElement.element.timeline[currentFrame] = undefined;
 
 					// TODO check remanent last value in given frame
 				}
@@ -383,8 +383,8 @@ function ResetValue(event) {
 }
 
 function NewCompositor() {
-	compositorData.animators.forEach(function (animator) {
-		timeline.listing.removeChild(animatorsData[animator.name].html);
+	compositorData.elements.forEach(function (element) {
+		timeline.listing.removeChild(elementsData[element.name].html);
 	});
 
 	RemoveSpritesheets();
@@ -396,9 +396,10 @@ function NewCompositor() {
 		fps : 30,
 		loop : true,
 		length : 60,
-		animators : []
+		spritesheets : [],
+		elements : []
 	};
-	animatorsData = {};
+	elementsData = {};
 
 	cursorGrabbed = false;
 	currentFrame = 0;
@@ -490,17 +491,9 @@ function ExportCompositor() {
 		fps : compositorData.fps,
 		loop : compositorData.loop,
 		length : compositorData.length,
-		animators : []
+		spritesheets : spritesheetLists.export,
+		elements : compositorData.elements
 	};
-
-	compositorData.animators.forEach(function (animator) {
-		exportCompositor.animators.push({
-			name : animator.name,
-			textures : animator.textures,
-			spritesheets : spritesheetLists.export,
-			timeline : animator.timeline
-		});
-	});
 
 	var link = 'data:application/octet-stream;base64,' + btoa(JSON.stringify(exportCompositor));
 

@@ -24,12 +24,22 @@ Compositor.prototype.init = function (data) {
 	this.loop = data.loop;
 	this.length = data.length;
 
-	data.animators.forEach(function (animator) {
-		animator = new Animator(animator);
-		this.addElement(animator);
+	data.elements.forEach(function (element) {
+		switch (element.type) {
+			case "animator" :
+				element = new Animator(element, data.spritesheets);
+				break;
+			case "emitter" :
+				element = new Emitter(element, data.spritesheets);
+				break;
+			default :
+				return false;
+		}
 
-		if (animator.timeline.length > this.length) {
-			this.length = animator.timeline.length;
+		this.addElement(element);
+
+		if (element.timeline.length > this.length) {
+			this.length = element.timeline.length;
 		}
 	}, this);
 
@@ -99,6 +109,10 @@ Compositor.prototype.tick = function (length) {
 			if (this.currentFrame < this.length) {
 				this.elements.forEach(function (element) {
 					element.tick(this.currentFrame);
+
+					if (element.type === "emitter") {
+						element.emitter.update(length / 1000);
+					}
 				}, this);
 			}
 		}

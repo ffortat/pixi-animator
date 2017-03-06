@@ -22,9 +22,10 @@ var compositorData = {
 	fps : 30,
 	loop : true,
 	length : 60,
-	animators : []
+	spritesheets : [],
+	elements : []
 };
-var animatorsData = {};
+var elementsData = {};
 var compositor = new Compositor(compositorData);
 var container = new PIXI.Container();
 var axis = new PIXI.Graphics();
@@ -55,24 +56,21 @@ function LoadEditor(name) {
 
 			UpdateFramebars(timeline.zoomSlider.value);
 
-			compositorData.animators.forEach(function (animator, index) {
-				var item = CreateAnimatorItem(animator.name);
+			compositorData.spritesheets.forEach(function (spritesheet) {
+				LoadSpritesheetData(spritesheet.file, spritesheet.data, spritesheet.tilewidth, spritesheet.tileheight);
+			});
 
-				if (index === 0) {
-					animator.spritesheets.forEach(function (spritesheet) {
-						LoadSpritesheetData(spritesheet.file, spritesheet.data, spritesheet.tilewidth, spritesheet.tileheight);
-					});
-				}
+			compositorData.elements.forEach(function (element, index) {
+				var item = CreateItem(element.name, element.type);
 				
-				animator.spritesheets = spritesheetLists.save;
-				animatorsData[animator.name] = {
+				elementsData[element.name] = {
 					html : item,
-					animator : animator
+					element : element
 				};
 
-				animator.timeline.forEach(function (data, frame) {
+				element.timeline.forEach(function (data, frame) {
 					if (data) {
-						addIndicator(animatorsData[animator.name], frame);
+						addIndicator(elementsData[element.name], frame);
 					}
 				});
 			});

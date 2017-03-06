@@ -1,25 +1,25 @@
 function grabsprite(event) {
 	var name;
 
-	compositor.elements.forEach(function (animator, index) {
-		if (animator.getBounds().contains(event.offsetX, event.offsetY)) {
-			if (!compositorData.animators[index].timeline[currentFrame]) {
-				compositorData.animators[index].timeline[currentFrame] = {};
+	compositor.elements.forEach(function (element, index) {
+		if (element.getBounds().contains(event.offsetX, event.offsetY)) {
+			if (!compositorData.elements[index].timeline[currentFrame]) {
+				compositorData.elements[index].timeline[currentFrame] = {};
 			}
 
-			if (!compositorData.animators[index].timeline[currentFrame].position) {
-				compositorData.animators[index].timeline[currentFrame].position = {
-					x : animator.x,
-					y : animator.y
+			if (!compositorData.elements[index].timeline[currentFrame].position) {
+				compositorData.elements[index].timeline[currentFrame].position = {
+					x : element.x,
+					y : element.y
 				};
 			}
 
 			spriteGrabbed = {
-				animator : animator,
-				frame : compositorData.animators[index].timeline[currentFrame]
+				element : element,
+				frame : compositorData.elements[index].timeline[currentFrame]
 			}
 			
-			name = compositorData.animators[index].name;
+			name = compositorData.elements[index].name;
 		}
 	});
 
@@ -30,13 +30,13 @@ function grabsprite(event) {
 
 function movesprite(event) {
 	if (spriteGrabbed) {
-		spriteGrabbed.animator.x += event.movementX;
-		spriteGrabbed.animator.y += event.movementY;
+		spriteGrabbed.element.x += event.movementX;
+		spriteGrabbed.element.y += event.movementY;
 	}
 }
 
 function releasesprite(event) {
-	SetPosition(new PIXI.Point(spriteGrabbed.animator.x - parseFloat(properties.pivot.x.value), spriteGrabbed.animator.y - parseFloat(properties.pivot.y.value)));
+	SetPosition(new PIXI.Point(spriteGrabbed.element.x - parseFloat(properties.pivot.x.value), spriteGrabbed.element.y - parseFloat(properties.pivot.y.value)));
 	
 	spriteGrabbed = null;
 }

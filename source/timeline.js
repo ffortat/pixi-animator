@@ -37,10 +37,10 @@ function releasecursor(event) {
 function addIndicator(element, frame) {
 	var bar = timeline.framebars.getElementsByClassName('timeline-frame')[frame];
 
-	if (bar.getElementsByClassName('i' + element.animator.name).length === 0) {
+	if (bar.getElementsByClassName('i' + element.element.name).length === 0) {
 		var div = document.createElement('div');
 		div.classList.add('indicator');
-		div.classList.add('i' + element.animator.name);
+		div.classList.add('i' + element.element.name);
 		div.style.top = (element.html.offsetTop) + 'px';
 		// div.style.left = (element.html.offsetWidth + (frame + 1) * timeline.space - 3) + 'px';
 		div.appendChild(document.createTextNode('o'));
@@ -52,15 +52,15 @@ function addIndicator(element, frame) {
 function removeIndicator(element, frame) {
 	var bar = timeline.framebars.getElementsByClassName('timeline-frame')[frame];
 	
-	if (bar.getElementsByClassName('i' + element.animator.name).length !== 0) {
-		var indicator = bar.getElementsByClassName('i' + element.animator.name)[0];
+	if (bar.getElementsByClassName('i' + element.element.name).length !== 0) {
+		var indicator = bar.getElementsByClassName('i' + element.element.name)[0];
 		bar.removeChild(indicator);
 	}
 }
 
-function CreateAnimatorItem(name) {
+function CreateItem(name, type) {
 	var div = document.createElement('div');
-	div.className = 'animator';
+	div.className = type;
 	var namediv = document.createElement('div');
 	namediv.className = 'name';
 	namediv.appendChild(document.createTextNode(name));
@@ -75,31 +75,31 @@ function CreateAnimatorItem(name) {
 	return div;
 }
 
-function DeleteAnimator(name) {
+function DeleteElement(name) {
 	var i = -1;
-	timeline.listing.removeChild(animatorsData[name].html);
+	timeline.listing.removeChild(elementsData[name].html);
 	
-	compositorData.animators.some(function (animator, index) {
-		if (animator.name === name) {
+	compositorData.elements.some(function (element, index) {
+		if (element.name === name) {
 			i = index;
 			return true;
 		}
 	});
 
 	if (i >= 0) {
-		compositorData.animators.splice(i, 1);
+		compositorData.elements.splice(i, 1);
 	}
 
-	delete animatorsData[name];
+	delete elementsData[name];
 }
 
 function SelectElement(name) {
-	for (var element in animatorsData) {
-		animatorsData[element].html.classList.remove('selected');
+	for (var element in elementsData) {
+		elementsData[element].html.classList.remove('selected');
 	}
 
-	if (animatorsData[name]) {
-		currentElement = animatorsData[name];
+	if (elementsData[name]) {
+		currentElement = elementsData[name];
 
 		currentElement.html.classList.add('selected');
 	} else {
@@ -150,7 +150,8 @@ function UpdateFramebars(zoom) {
 function CreateTimeline() {
 	timeline = document.getElementById('timeline');
 	timeline.listing = timeline.getElementsByClassName('listing')[0];
-	timeline.addButton = timeline.getElementsByClassName('add')[0];
+	timeline.addAnimatorButton = timeline.getElementsByClassName('addAnimator')[0];
+	timeline.addEmitterButton = timeline.getElementsByClassName('addEmitter')[0];
 	timeline.removeButton = timeline.getElementsByClassName('remove')[0];
 	timeline.playButton = timeline.getElementsByClassName('play')[0];
 	timeline.zoomSlider = timeline.getElementsByClassName('zoom')[0];
@@ -166,22 +167,45 @@ function CreateTimeline() {
 	timeline.timeline.addEventListener('mousemove', movecursor);
 	timeline.timeline.addEventListener('mouseup', releasecursor);
 
-	timeline.addButton.addEventListener('click', function () {
-		var name = prompt('Add a new object');
+	timeline.addAnimatorButton.addEventListener('click', function () {
+		var name = prompt('Add a new Animator');
+		// TODO add name check
 		if (name) {
-			var item = CreateAnimatorItem(name);
+			var item = CreateItem(name, "animator");
 
-			animatorsData[name] = {
+			elementsData[name] = {
 				html : item,
-				animator : {
+				element : {
 					name : name,
+					type : "animator",
 					textures : [],
-					spritesheets : spritesheetLists.save,
 					timeline : []
 				}
 			};
 
-			compositorData.animators.push(animatorsData[name].animator);
+			compositorData.elements.push(elementsData[name].element);
+
+			SelectElement(name);
+		}
+	});
+
+	timeline.addEmitterButton.addEventListener('click', function () {
+		var name = prompt('Add a new Emitter');
+		// TODO add name check
+		if (name) {
+			var item = CreateItem(name, "emitter");
+
+			elementsData[name] = {
+				html : item,
+				element : {
+					name : name,
+					type : "emitter",
+					textures : [],
+					timeline : []
+				}
+			};
+
+			compositorData.elements.push(elementsData[name].element);
 
 			SelectElement(name);
 		}
@@ -189,7 +213,7 @@ function CreateTimeline() {
 	
 	timeline.removeButton.addEventListener('click', function () {
 		if (currentElement) {
-			DeleteAnimator(currentElement.animator.name);
+			DeleteElement(currentElement.element.name);
 			refreshCompositor();
 			SelectElement();
 		}

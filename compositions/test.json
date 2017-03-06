@@ -2,21 +2,22 @@
 	"fps" : 30,
 	"loop" : true,
 	"length" : 60,
-	"animators" : [
+	"spritesheets" : [
+		{
+			"file" : "images/name.png",
+			"tilewidth" : 64,
+			"tileheight" : 64,
+			"imagewidth" : 512,
+			"imageheight" : 64,
+			"firstindex" : 0
+		}
+	],
+	"elements" : [
 		{
 			"name" : "body",
+			"type" : "animator",
 			"textures" : [
 				0, 1, 2
-			],
-			"spritesheets" : [
-				{
-					"file" : "images/name.png",
-					"tilewidth" : 64,
-					"tileheight" : 64,
-					"imagewidth" : 512,
-					"imageheight" : 64,
-					"firstindex" : 0
-				}
 			],
 			"timeline" : [
 				{
@@ -61,18 +62,9 @@
 		},
 		{
 			"name" : "head",
+			"type" : "animator",
 			"textures" : [
 				3, 1, 2
-			],
-			"spritesheets" : [
-				{
-					"file" : "images/name.png",
-					"tilewidth" : 64,
-					"tileheight" : 64,
-					"imagewidth" : 512,
-					"imageheight" : 64,
-					"firstindex" : 0
-				}
 			],
 			"timeline" : [
 				{
@@ -106,6 +98,100 @@
 				{
 					"texture" : 2
 				},
+				null,
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"name" : "particles",
+			"type" : "emitter",
+			"textures" : [
+				3, 1, 2
+			],
+			"properties" : {
+				"alpha": {
+					"start": 1,
+					"end": 0
+				},
+				"scale": {
+					"start": 1,
+					"end": 0.5,
+					"minimumScaleMultiplier": 1
+				},
+				"color": {
+					"start": "#e4f9ff",
+					"end": "#3fcbff"
+				},
+				"speed": {
+					"start": 100,
+					"end": 150,
+					"minimumSpeedMultiplier": 1
+				},
+				"acceleration": {
+					"x": 0,
+					"y": 0
+				},
+				"maxSpeed": 0,
+				"startRotation": {
+					"min": 270,
+					"max": 270
+				},
+				"noRotation": false,
+				"rotationSpeed": {
+					"min": 0,
+					"max": 0
+				},
+				"lifetime": {
+					"min": 1,
+					"max": 1
+				},
+				"blendMode": "add",
+				"frequency": 0.3,
+				"emitterLifetime": -1,
+				"maxParticles": 5000,
+				"pos": {
+					"x": 0,
+					"y": 0
+				},
+				"addAtBack": false,
+				"spawnType": "circle",
+				"spawnCircle": {
+					"x": 0,
+					"y": 0,
+					"r": 50
+				},
+				"textures" : [1]
+			},
+			"timeline" : [
+				{
+					"emit" : true,
+					"position" : {"x" : 256, "y" : 64}
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				{
+					"emit" : false
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				{
+					"position" : {"x" : 192, "y" : 128}
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
 				null,
 				null,
 				null,

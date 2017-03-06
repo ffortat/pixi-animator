@@ -1,17 +1,18 @@
-function Animator(animation, spritesheets) {
-	PIXI.Sprite.call(this);
+function Emitter(emition, spritesheets) {
+	PIXI.Container.call(this);
 
-	this.type = animation.type;
-	this.textures = [];
+	this.type = emition.type;
+	this.emitter;
 	this.timeline = [];
+	this.textures = [];
 
-	this.init(animation, spritesheets);
+	this.init(emition, spritesheets);
 }
 
-Animator.prototype = Object.create(PIXI.Sprite.prototype);
-Animator.prototype.constructor = Animator;
+Emitter.prototype = Object.create(PIXI.Container.prototype);
+Emitter.prototype.constructor = Emitter;
 
-Animator.prototype.init = function (data, spritesheets) {
+Emitter.prototype.init = function (data, spritesheets) {
 	var textures = data.textures.slice();
 	spritesheets.forEach(function (spritesheet) {
 		var baseTexture = PIXI.BaseTexture.fromImage(spritesheet.data ? spritesheet.data : spritesheet.file);
@@ -51,12 +52,11 @@ Animator.prototype.init = function (data, spritesheets) {
 	}, this);
 
 	this.interpolate('position');
-	this.interpolate('rotation');
-	this.interpolate('scale');
-	this.interpolate('alpha');
+
+	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
 }
 
-Animator.prototype.interpolate = function (property) {
+Emitter.prototype.interpolate = function (property) {
 	var frame;
 	
 	for (var index = 0; index < this.timeline.length; index += 1) {
@@ -112,114 +112,62 @@ Animator.prototype.interpolate = function (property) {
 	};
 }
 
-Animator.prototype.reset = function () {
+Emitter.prototype.getTextureSet = function (textureList) {
+	var textureSet = [];
+
+	textureList.forEach(function (textureId) {
+		textureSet.push(this.textures[textureId]);
+	}, this);
+
+	return textureSet;
+}
+
+Emitter.prototype.reset = function () {
+	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
 	this.tick(0);
 }
 
-Animator.prototype.goToFrame = function (frame) {
-	var currentFrame;
-	var texture;
-	var pivot;
-	var position;
-	var rotation;
-	var scale;
-	var alpha;
+Emitter.prototype.goToFrame = function (frame) {
 
-	// TODO reset state to initial
-
-	for (var i = 0; i <= frame; i += 1) {
-		currentFrame = this.timeline[i];
-
-		if (currentFrame) {
-			if (currentFrame.texture !== undefined) {
-				if (this.textures[currentFrame.texture]) {
-					texture = this.textures[currentFrame.texture];
-				}
-			}
-
-			if (currentFrame.blendmode) {
-				this.blendMode = PIXI.BLEND_MODES[currentFrame.blendmode];
-			}
-
-			if (currentFrame.pivot) {
-				pivot = currentFrame.pivot;
-			}
-
-			if (currentFrame.position) {
-				position = currentFrame.position;
-			}
-
-			if (currentFrame.rotation !== undefined) {
-				rotation = currentFrame.rotation;
-			}
-
-			if (currentFrame.scale) {
-				scale = currentFrame.scale;
-			}
-
-			if (currentFrame.alpha !== undefined) {
-				alpha = currentFrame.alpha;
-			}
-		}
-	}
-
-	if (texture !== undefined) {
-		this.texture = texture;
-	}
-
-	if (pivot) {
-		this.pivot = new PIXI.Point(pivot.x, pivot.y);
-	}
-
-	if (position) {
-		this.position = new PIXI.Point(this.pivot.x + position.x, this.pivot.y + position.y);
-	}
-
-	if (rotation !== undefined) {
-		this.rotation = rotation;
-	}
-
-	if (scale) {
-		this.scale = new PIXI.Point(scale.x, scale.y);
-	}
-
-	if (alpha !== undefined) {
-		this.alpha = alpha;
-	}
 }
 
-Animator.prototype.tick = function (frame) {
+Emitter.prototype.tick = function (frame) {
 	frame = this.timeline[frame];
 
 	if (frame) {
-		if (frame.texture !== undefined) {
-			if (this.textures[frame.texture]) {
-				this.texture = this.textures[frame.texture];
-			}
+		if (frame.emit !== undefined) {
+			this.emitter.emit = frame.emit;
 		}
 
-		if (frame.blendmode) {
-			this.blendMode = PIXI.BLEND_MODES[frame.blendmode];
-		}
+		// if (frame.texture !== undefined) {
+		// 	if (this.textures[frame.texture]) {
+		// 		this.texture = this.textures[frame.texture];
+		// 	}
+		// }
 
-		if (frame.pivot) {
-			this.pivot = new PIXI.Point(frame.pivot.x, frame.pivot.y);
-		}
+		// if (frame.blendmode) {
+		// 	this.blendMode = PIXI.BLEND_MODES[frame.blendmode];
+		// }
+
+		// if (frame.pivot) {
+		// 	this.pivot = new PIXI.Point(frame.pivot.x, frame.pivot.y);
+		// }
 
 		if (frame.position) {
-			this.position = new PIXI.Point(this.pivot.x + frame.position.x, this.pivot.y + frame.position.y);
+			this.emitter.updateSpawnPos(this.pivot.x + frame.position.x, this.pivot.y + frame.position.y);
+			// this.position = new PIXI.Point(this.pivot.x + frame.position.x, this.pivot.y + frame.position.y);
 		}
 
-		if (frame.rotation !== undefined) {
-			this.rotation = frame.rotation;
-		}
+		// if (frame.rotation !== undefined) {
+		// 	this.rotation = frame.rotation;
+		// }
 
-		if (frame.scale) {
-			this.scale = new PIXI.Point(frame.scale.x, frame.scale.y);
-		}
+		// if (frame.scale) {
+		// 	this.scale = new PIXI.Point(frame.scale.x, frame.scale.y);
+		// }
 
-		if (frame.alpha !== undefined) {
-			this.alpha = frame.alpha;
-		}
+		// if (frame.alpha !== undefined) {
+		// 	this.alpha = frame.alpha;
+		// }
 	}
 }
