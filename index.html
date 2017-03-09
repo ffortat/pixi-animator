@@ -7,31 +7,61 @@
 
 	<body>
 		<div id="leftpanel">
-			<div id="properties">
-				<h2 class="name"></h2>
-				<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
-				<div class="blend_mode">Blend Mode: 
-					<select id="blend_mode">
-						<option value=""></option>
-					</select>
-				</div>
-				<div class="pivot">Pivot: X <input id="pivot-x" type="text" /> Y <input id="pivot-y" type="text" /></div>
-				<div class="position">Position: X <input id="position-x" type="text" /> Y <input id="position-y" type="text" /></div>
-				<div class="rotation">Rotation: <input id="rotation" type="text" /></div>
-				<div class="scale">Scale: X <input id="scale-x" type="text" /> Y <input id="scale-y" type="text" /></div>
-				<div class="alpha">Alpha: <input id="alpha" type="text" /></div>
-			</div>
-			<div id="comp-properties">
-				<div class="framerate">Framerate: <input id="framerate" type="text" /></div>
-				<div class="loop">Loop: <input id="loop" type="checkbox" /></div>
-				<div class="length">Frame count: <input id="length" type="text" /></div>
-			</div>
-			<div id="tools"></div>
+			<h1>Pixi Animator</h1>
 			<div id="fileButtons">
 				<button class="new">New</button>
 				<button class="load">Load</button>
 				<button class="save">Save</button>
 				<button class="export">Export</button>
+			</div>
+			<div id="comp-properties">
+				<h2>Project</h2>
+				<div class="framerate">Framerate: <input id="framerate" type="text" /></div>
+				<div class="loop">Loop: <input id="loop" type="checkbox" /></div>
+				<div class="length">Frame count: <input id="length" type="text" /></div>
+			</div>
+			<div id="tools">
+				<h2>Tools</h2>
+			</div>
+			<div id="properties">
+				<h2>Properties</h2>
+				<h2 class="name"></h2>
+				<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
+				<div class="blend_mode">
+					<label for="blend_mode">Blend Mode: </label>
+					<button class="reset">R</button>
+					<select id="blend_mode">
+						<option value=""></option>
+					</select>
+				</div>
+				<div class="pivot">
+					<label for="pivot-x">Pivot:</label>
+					<button class="reset">R</button>
+					<input type="text" id="pivot-x" placeholder="Pivot X" />
+					<input type="text" id="pivot-y" placeholder="Pivot Y" />
+				</div>
+				<div class="position">
+					<label for="">Position:</label>
+					<button class="reset">R</button>
+					<input id="position-x" type="text" placeholder="Pos X" />
+					<input id="position-y" type="text" placeholder="Pos Y" />
+				</div>
+				<div class="rotation">
+					<label for="">Rotation:</label>
+					<button class="reset">R</button>
+					<input id="rotation" type="text"placeholder="Rotation" />
+				</div>
+				<div class="scale">
+					<label for="">Scale:</label>
+					<button class="reset">R</button>
+					<input id="scale-x" type="text" placeholder="Scale X" />
+					<input id="scale-y" type="text" placeholder="Scale Y" />
+				</div>
+				<div class="alpha">
+					<label for="">Alpha:</label>
+					<button class="reset">R</button>
+					<input id="alpha" type="text" placeholder="Alpha" />
+				</div>
 			</div>
 		</div>
 		<div id="rightpanel">
