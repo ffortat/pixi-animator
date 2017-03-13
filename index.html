@@ -24,9 +24,9 @@
 				<h2>Tools</h2>
 			</div>
 			<div id="properties">
-				<h2>Properties</h2>
+				<h2 class="title">Properties</h2>
+				<h2 class="name"></h2>
 				<div id="animatorProperties">
-					<h2 class="name"></h2>
 					<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
 					<div class="blend_mode">
 						<label for="blend_mode">Blend Mode: </label>
@@ -50,7 +50,7 @@
 					<div class="rotation">
 						<label for="">Rotation:</label>
 						<button class="reset">R</button>
-						<input id="rotation" type="text"placeholder="Rotation" />
+						<input id="rotation" type="text" placeholder="Rotation" />
 					</div>
 					<div class="scale">
 						<label for="">Scale:</label>
@@ -65,35 +65,118 @@
 					</div>
 				</div>
 				<div id="particlesProperties">
-					<h2 class="name"></h2>
-					<div class="alpha-start">Alpha Start: <input class="zoom" type="range" min="0" max="1" value="1" step="0.01" /></div>
-					<div class="alpha-end">Alpha End: <input class="zoom" type="range" min="0" max="1" value="1" step="0.01" /></div>
-					<div class="scale">Scale: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="scale-mult">Scale multiplier: <input id="scale-multiplier" type="text" /></div>
-					<div class="color">Color: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="speed">Speed: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="speed-mult">Speed multiplier: <input id="scale-multiplier" type="text" /></div>
-					<div class="acceleration">Acceleration: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="max-speed">Maximum speed: <input id="scale-multiplier" type="text" /></div>
-					<div class="start-rotation">Start rotation: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="no-rotation">No particle rotation: <input id="loop" type="checkbox" /></div>
-					<div class="rotation">Rotation speed: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="lifetime">Lifetime: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="blend_mode">Blend Mode: 
+					<div class="alpha-start">
+						<label for="alpha-start">Alpha Start:</label>
+						<button class="reset">R</button>
+						<input id="alpha-start" type="range" min="0" max="1" value="1" step="0.01" />
+					</div>
+					<div class="alpha-end">
+						<label for="alpha-end">Alpha End:</label>
+						<button class="reset">R</button>
+						<input id="alpha-end" type="range" min="0" max="1" value="1" step="0.01" />
+					</div>
+					<div class="scale">
+						<label for="">Scale:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Start" />
+						<input id="scale-end" type="text" placeholder="End" />
+					</div>
+					<div class="scale-mult">
+						<label>Scale multiplier:</label>
+						<button class="reset">R</button>
+						<input id="scale-multiplier" type="text" placeholder="Mult" />
+					</div>
+					<div class="color">
+						<label>Color:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Start" />
+						<input id="scale-end" type="text" placeholder="End" />
+					</div>
+					<div class="speed">
+						<label>Speed:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Start" />
+						<input id="scale-end" type="text" placeholder="End" />
+					</div>
+					<div class="speed-mult">
+						<label>Speed multiplier:</label>
+						<button class="reset">R</button>
+						<input id="scale-multiplier" type="text" placeholder="Mult" />
+					</div>
+					<div class="acceleration">
+						<label>Acceleration:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Accel X" />
+						<input id="scale-end" type="text" placeholder="Accel Y" />
+					</div>
+					<div class="max-speed">
+						<label>Maximum speed:</label>
+						<button class="reset">R</button>
+						<input id="scale-multiplier" type="text" placeholder="Max" />
+					</div>
+					<div class="start-rotation">
+						<label>Start rotation:</label>
+						<button class="reset">R</button>
+						<input id="start-rotation-min" type="text" placeholder="Min" />
+						<input id="start-rotation-max" type="text" placeholder="Max" />
+					</div>
+					<div class="no-rotation">
+						<label>No particle rotation:</label>
+						<button class="reset">R</button>
+						<input id="loop" type="checkbox" />
+					</div>
+					<div class="rotation">
+						<label>Rotation speed:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Min" />
+						<input id="scale-end" type="text" placeholder="Max" />
+					</div>
+					<div class="lifetime">
+						<label>Lifetime:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Min" />
+						<input id="scale-end" type="text" placeholder="Max" />
+					</div>
+					<div class="blend_mode">
+						<label for="blend_mode">Blend Mode:</label>
+						<button class="reset">R</button>
 						<select id="blend_mode">
 							<option value=""></option>
 						</select>
 					</div>
-					<div class="spawn">Spawn Frequency: <input id="scale-multiplier" type="text" /></div>
-					<div class="emitter-lifetime">Emitter Lifetime: <input id="scale-multiplier" type="text" /></div>
-					<div class="max-particles">Max Particles: <input id="scale-multiplier" type="text" /></div>
-					<div class="spawn-type">Spawn Type: 
+					<div class="spawn">
+						<label>Spawn Frequency:</label>
+						<button class="reset">R</button>
+						<input id="scale-multiplier" type="text" placeholder="Freq" />
+					</div>
+					<div class="emitter-lifetime">
+						<label>Emitter Lifetime:</label>
+						<button class="reset">R</button>
+						<input id="scale-multiplier" type="text" placeholder="Duration" />
+					</div>
+					<div class="max-particles">
+						<label>Max Particles:</label>
+						<button class="reset">R</button>
+						<input id="scale-multiplier" type="text" placeholder="Max" />
+					</div>
+					<div class="spawn-type">
+						<label for="spawn-type">Spawn Type:</label>
+						<button class="reset">R</button>
 						<select id="spawn-type">
 							<option value=""></option>
 						</select>
 					</div>
-					<div class="position">Spawn Position: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
-					<div class="queue">Add at back: <input id="loop" type="checkbox" /></div>
+					<div class="position">
+						<label>Spawn Position:</label>
+						<button class="reset">R</button>
+						<input id="scale-start" type="text" placeholder="Spawn X" />
+						<input id="scale-end" type="text" placeholder="Spawn Y" />
+					</div>
+					<div class="queue">
+						<label>Add at back:</label>
+						<button class="reset">R</button>
+						<input id="loop" type="checkbox" />
+					</div>
 				</div>
 			</div>
 				</div>

@@ -54,13 +54,40 @@ canvas {
 	width : 50px;
 }
 
+#leftpanel #properties input[type='range'] {
+	width : 100px;
+}
+
+#leftpanel #properties h2.title {
+	float : left;
+	width : 45%;
+
+}
+
+#leftpanel #properties h2.name {
+	float : right;
+	color : #333;
+}
+
+#leftpanel #properties #animatorProperties,
+#leftpanel #properties #particlesProperties {
+	clear : both;
+	display : none;
+	height : 500px;
+	overflow : auto;
+}
+
+#leftpanel #properties #particlesProperties {
+	display : block;
+}
+
 #leftpanel>div {
 	margin: 0 4px;
 	padding: 4px 0;
 	border-top: 1px dotted #000;
 }
 #leftpanel label {
-	width: 96px;
+	width: 80px;
 	display: inline-block;
 }
 #leftpanel .reset {
