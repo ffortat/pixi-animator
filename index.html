@@ -28,10 +28,10 @@
 				<h2 class="name"></h2>
 				<div id="animatorProperties">
 					<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
-					<div class="blend_mode">
-						<label for="blend_mode">Blend Mode: </label>
+					<div class="blend-mode">
+						<label for="blend-mode">Blend Mode: </label>
 						<button class="reset">R</button>
-						<select id="blend_mode">
+						<select id="blend-mode">
 							<option value=""></option>
 						</select>
 					</div>
@@ -84,35 +84,35 @@
 					<div class="scale-mult">
 						<label>Scale multiplier:</label>
 						<button class="reset">R</button>
-						<input id="scale-multiplier" type="text" placeholder="Mult" />
+						<input id="scale-mult" type="text" placeholder="Mult" />
 					</div>
 					<div class="color">
 						<label>Color:</label>
 						<button class="reset">R</button>
-						<input id="scale-start" type="text" placeholder="Start" />
-						<input id="scale-end" type="text" placeholder="End" />
+						<input id="color-start" type="text" placeholder="Start" />
+						<input id="color-end" type="text" placeholder="End" />
 					</div>
 					<div class="speed">
 						<label>Speed:</label>
 						<button class="reset">R</button>
-						<input id="scale-start" type="text" placeholder="Start" />
-						<input id="scale-end" type="text" placeholder="End" />
+						<input id="speed-start" type="text" placeholder="Start" />
+						<input id="speed-end" type="text" placeholder="End" />
 					</div>
 					<div class="speed-mult">
 						<label>Speed multiplier:</label>
 						<button class="reset">R</button>
-						<input id="scale-multiplier" type="text" placeholder="Mult" />
+						<input id="speed-mult" type="text" placeholder="Mult" />
 					</div>
 					<div class="acceleration">
 						<label>Acceleration:</label>
 						<button class="reset">R</button>
-						<input id="scale-start" type="text" placeholder="Accel X" />
-						<input id="scale-end" type="text" placeholder="Accel Y" />
+						<input id="acceleration-x" type="text" placeholder="Accel X" />
+						<input id="acceleration-y" type="text" placeholder="Accel Y" />
 					</div>
 					<div class="max-speed">
 						<label>Maximum speed:</label>
 						<button class="reset">R</button>
-						<input id="scale-multiplier" type="text" placeholder="Max" />
+						<input id="max-speed" type="text" placeholder="Max" />
 					</div>
 					<div class="start-rotation">
 						<label>Start rotation:</label>
@@ -123,59 +123,63 @@
 					<div class="no-rotation">
 						<label>No particle rotation:</label>
 						<button class="reset">R</button>
-						<input id="loop" type="checkbox" />
+						<input id="no-rotation" type="checkbox" />
 					</div>
-					<div class="rotation">
+					<div class="rotation-speed">
 						<label>Rotation speed:</label>
 						<button class="reset">R</button>
-						<input id="scale-start" type="text" placeholder="Min" />
-						<input id="scale-end" type="text" placeholder="Max" />
+						<input id="rotation-speed-min" type="text" placeholder="Min" />
+						<input id="rotation-speed-max" type="text" placeholder="Max" />
 					</div>
 					<div class="lifetime">
 						<label>Lifetime:</label>
 						<button class="reset">R</button>
-						<input id="scale-start" type="text" placeholder="Min" />
-						<input id="scale-end" type="text" placeholder="Max" />
+						<input id="lifetime-min" type="text" placeholder="Min" />
+						<input id="lifetime-max" type="text" placeholder="Max" />
 					</div>
-					<div class="blend_mode">
-						<label for="blend_mode">Blend Mode:</label>
+					<div class="blend-mode-particle">
+						<label for="blend-mode-particle">Blend Mode:</label>
 						<button class="reset">R</button>
-						<select id="blend_mode">
+						<select id="blend-mode-particle">
 							<option value=""></option>
 						</select>
 					</div>
 					<div class="spawn">
 						<label>Spawn Frequency:</label>
 						<button class="reset">R</button>
-						<input id="scale-multiplier" type="text" placeholder="Freq" />
+						<input id="spawn" type="text" placeholder="Freq" />
 					</div>
 					<div class="emitter-lifetime">
 						<label>Emitter Lifetime:</label>
 						<button class="reset">R</button>
-						<input id="scale-multiplier" type="text" placeholder="Duration" />
+						<input id="emitter-lifetime" type="text" placeholder="Duration" />
 					</div>
 					<div class="max-particles">
 						<label>Max Particles:</label>
 						<button class="reset">R</button>
-						<input id="scale-multiplier" type="text" placeholder="Max" />
+						<input id="max-particles" type="text" placeholder="Max" />
 					</div>
 					<div class="spawn-type">
 						<label for="spawn-type">Spawn Type:</label>
 						<button class="reset">R</button>
 						<select id="spawn-type">
-							<option value=""></option>
+							<option value="point">Point</option>
+							<option value="rectangle">Rectangle</option>
+							<option value="circle">Circle</option>
+							<option value="burst">Burst</option>
+							<option value="ring">Ring</option>
 						</select>
 					</div>
-					<div class="position">
+					<div class="emitter-position">
 						<label>Spawn Position:</label>
 						<button class="reset">R</button>
-						<input id="scale-start" type="text" placeholder="Spawn X" />
-						<input id="scale-end" type="text" placeholder="Spawn Y" />
+						<input id="emitter-position-x" type="text" placeholder="Spawn X" />
+						<input id="emitter-position-y" type="text" placeholder="Spawn Y" />
 					</div>
 					<div class="queue">
 						<label>Add at back:</label>
 						<button class="reset">R</button>
-						<input id="loop" type="checkbox" />
+						<input id="queue" type="checkbox" />
 					</div>
 				</div>
 			</div>
@@ -225,6 +229,8 @@
 		<script src="source/libs/pixi/emitter.js"></script>
 		<script src="source/viewport.js"></script>
 		<script src="source/timeline.js"></script>
+		<script src="source/animatorProperties.js"></script>
+		<script src="source/particlesProperties.js"></script>
 		<script src="source/leftpanel.js"></script>
 		<script src="source/rightpanel.js"></script>
 		<script src="source/editor.js"></script>

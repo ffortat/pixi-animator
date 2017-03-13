@@ -4,13 +4,13 @@ function updateFrame(frame, force) {
 
 		var propertiesData;
 
-		properties.texture.label.style.fontWeight = '';
-		properties.blendmode.label.style.fontWeight = '';
-		properties.pivot.label.style.fontWeight = '';
-		properties.position.label.style.fontWeight = '';
-		properties.rotation.label.style.fontWeight = '';
-		properties.scale.label.style.fontWeight = '';
-		properties.alpha.label.style.fontWeight = '';
+		properties.animator.texture.label.style.fontWeight = '';
+		properties.animator.blendmode.label.style.fontWeight = '';
+		properties.animator.pivot.label.style.fontWeight = '';
+		properties.animator.position.label.style.fontWeight = '';
+		properties.animator.rotation.label.style.fontWeight = '';
+		properties.animator.scale.label.style.fontWeight = '';
+		properties.animator.alpha.label.style.fontWeight = '';
 
 		if (currentElement) {
 			propertiesData = {
@@ -36,7 +36,7 @@ function updateFrame(frame, force) {
 							propertiesData.texture = frameData.texture;
 
 							if (i === currentFrame) {
-								properties.texture.label.style.fontWeight = 'bold';
+								properties.animator.texture.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -47,7 +47,7 @@ function updateFrame(frame, force) {
 							propertiesData.blendmode = frameData.blendmode;
 
 							if (i === currentFrame) {
-								properties.blendmode.label.style.fontWeight = 'bold';
+								properties.animator.blendmode.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -58,7 +58,7 @@ function updateFrame(frame, force) {
 							propertiesData.pivot = {x : frameData.pivot.x, y : frameData.pivot.y};
 
 							if (i === currentFrame) {
-								properties.pivot.label.style.fontWeight = 'bold';
+								properties.animator.pivot.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -69,7 +69,7 @@ function updateFrame(frame, force) {
 							propertiesData.position = {x : frameData.position.x, y : frameData.position.y};
 
 							if (i === currentFrame) {
-								properties.position.label.style.fontWeight = 'bold';
+								properties.animator.position.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -80,7 +80,7 @@ function updateFrame(frame, force) {
 							propertiesData.rotation = frameData.rotation;
 
 							if (i === currentFrame) {
-								properties.rotation.label.style.fontWeight = 'bold';
+								properties.animator.rotation.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -91,7 +91,7 @@ function updateFrame(frame, force) {
 							propertiesData.scale = {x : frameData.scale.x, y : frameData.scale.y};
 
 							if (i === currentFrame) {
-								properties.scale.label.style.fontWeight = 'bold';
+								properties.animator.scale.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -102,7 +102,7 @@ function updateFrame(frame, force) {
 							propertiesData.alpha = frameData.alpha;
 
 							if (i === currentFrame) {
-								properties.alpha.label.style.fontWeight = 'bold';
+								properties.animator.alpha.label.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -157,228 +157,6 @@ function updateFrame(frame, force) {
 
 		updateViewport(propertiesData);
 		compositor.goToFrame(currentFrame);
-	}
-}
-
-function SetProperties(data) {
-	properties.name.innerText = data.name;
-	properties.texture.value = data.texture;
-	properties.blendmode.value = data.blendmode;
-
-	if (document.activeElement !== properties.pivot.x) {
-		properties.pivot.x.value = data.pivot.x;
-	}
-	if (document.activeElement !== properties.pivot.y) {
-		properties.pivot.y.value = data.pivot.y;
-	}
-	if (document.activeElement !== properties.position.x) {
-		properties.position.x.value = data.position.x;
-	}
-	if (document.activeElement !== properties.position.y) {
-		properties.position.y.value = data.position.y;
-	}
-	if (document.activeElement !== properties.rotation) {
-		properties.rotation.value = data.rotation;
-	}
-	if (document.activeElement !== properties.scale.x) {
-		properties.scale.x.value = data.scale.x;
-	}
-	if (document.activeElement !== properties.scale.x) {
-		properties.scale.y.value = data.scale.y;
-	}
-	if (document.activeElement !== properties.alpha) {
-		properties.alpha.value = data.alpha;
-	}
-}
-
-function UseTexture(event) {
-	var id = parseInt(event.target.id.substr(event.target.id.indexOf('-') + 1));
-
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].texture = id;
-
-		if (currentElement.element.textures.indexOf(id) === -1) {
-			currentElement.element.textures.push(id);
-		}
-
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function SetBlendMode(event) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].blendmode = properties.blendmode.value;
-
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function SetPivot(point) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].pivot = {
-			x : point.x,
-			y : point.y
-		};
-
-		refreshCompositor();
-
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function SetPosition(point) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].position = {
-			x : point.x,
-			y : point.y
-		};
-
-		refreshCompositor();
-
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function SetRotation(event) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].rotation = parseFloat(properties.rotation.value);
-
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function SetScale(point) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].scale = {
-			x : point.x,
-			y : point.y
-		};
-
-		refreshCompositor();
-
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function SetAlpha(event) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
-		currentElement.element.timeline[currentFrame].alpha = parseFloat(properties.alpha.value);
-
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
-	}
-}
-
-function ResetValue(event) {
-	if (currentElement) {
-		var frame = currentElement.element.timeline[currentFrame];
-		var changed = false;
-
-		if (frame) {
-			switch (event.target) {
-				case properties.texture.label :
-					if (frame.texture !== undefined) {
-						delete frame.texture;
-						changed = true;
-					}
-					break;
-				case properties.blendmode.label :
-					if (frame.blendmode !== undefined) {
-						delete frame.blendmode;
-						changed = true;
-					}
-					break;
-				case properties.pivot.label :
-					if (frame.pivot !== undefined) {
-						delete frame.pivot;
-						changed = true;
-					}
-					break;
-				case properties.position.label :
-					if (frame.position !== undefined) {
-						delete frame.position;
-						changed = true;
-					}
-					break;
-				case properties.rotation.label :
-					if (frame.rotation !== undefined) {
-						delete frame.rotation;
-						changed = true;
-					}
-					break;
-				case properties.scale.label :
-					if (frame.scale !== undefined) {
-						delete frame.scale;
-						changed = true;
-					}
-					break;
-				case properties.alpha.label :
-					if (frame.alpha !== undefined) {
-						delete frame.alpha;
-						changed = true;
-					}
-					break;
-			}
-
-			if (changed) {
-				refreshCompositor();
-
-				if (frame.texture === undefined && frame.blendmode === undefined && 
-					frame.pivot === undefined && frame.position === undefined && 
-					frame.rotation === undefined && frame.scale === undefined && 
-					frame.alpha === undefined) {
-
-					removeIndicator(currentElement, currentFrame);
-					currentElement.element.timeline[currentFrame] = undefined;
-
-					// TODO check remanent last value in given frame
-				}
-
-				updateFrame(currentFrame, true);
-			}
-		}
 	}
 }
 
@@ -519,70 +297,7 @@ function ExportCompositor() {
 function CreateLeftPanel() {
 	properties = document.getElementById('properties');
 	properties.name = properties.getElementsByClassName('name')[0];
-	properties.texture = document.getElementById('texture-id');
-	properties.texture.label = properties.getElementsByClassName('texture')[0];
-	properties.blendmode = document.getElementById('blend_mode');
-	properties.blendmode.label = properties.getElementsByClassName('blend_mode')[0];
-	properties.pivot = {};
-	properties.pivot.x = document.getElementById('pivot-x');
-	properties.pivot.y = document.getElementById('pivot-y');
-	properties.pivot.label = properties.getElementsByClassName('pivot')[0];
-	properties.position = {};
-	properties.position.x = document.getElementById('position-x');
-	properties.position.y = document.getElementById('position-y');
-	properties.position.label = properties.getElementsByClassName('position')[0];
-	properties.rotation = document.getElementById('rotation');
-	properties.rotation.label = properties.getElementsByClassName('rotation')[0];
-	properties.scale = {};
-	properties.scale.x = document.getElementById('scale-x');
-	properties.scale.y = document.getElementById('scale-y');
-	properties.scale.label = properties.getElementsByClassName('scale')[0];
-	properties.alpha = document.getElementById('alpha');
-	properties.alpha.label = properties.getElementsByClassName('alpha')[0];
-
-	for (var mode in PIXI.BLEND_MODES) {
-		var option = document.createElement('option');
-		option.value = mode;
-		option.appendChild(document.createTextNode(mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()));
-
-		properties.blendmode.appendChild(option);
-	}
-
-	properties.blendmode.addEventListener('input', SetBlendMode);
-
-	properties.pivot.x.addEventListener('input', function (event) {
-		SetPivot({x : parseFloat(properties.pivot.x.value), y : parseFloat(properties.pivot.y.value)});
-	});
-	properties.pivot.y.addEventListener('input', function (event) {
-		SetPivot({x : parseFloat(properties.pivot.x.value), y : parseFloat(properties.pivot.y.value)});
-	});
-
-	properties.position.x.addEventListener('input', function (event) {
-		SetPosition({x : parseFloat(properties.position.x.value), y : parseFloat(properties.position.y.value)});
-	});
-	properties.position.y.addEventListener('input', function (event) {
-		SetPosition({x : parseFloat(properties.position.x.value), y : parseFloat(properties.position.y.value)});
-	});
-
-	properties.rotation.addEventListener('input', SetRotation);
-
-	properties.scale.x.addEventListener('input', function (event) {
-		SetScale({x : parseFloat(properties.scale.x.value), y : parseFloat(properties.scale.y.value)});
-	});
-	properties.scale.y.addEventListener('input', function (event) {
-		SetScale({x : parseFloat(properties.scale.x.value), y : parseFloat(properties.scale.y.value)});
-	});
-
-	properties.alpha.addEventListener('input', SetAlpha);
-
-	properties.texture.label.addEventListener('click', ResetValue);
-	properties.blendmode.label.addEventListener('click', ResetValue);
-	properties.pivot.label.addEventListener('click', ResetValue);
-	properties.position.label.addEventListener('click', ResetValue);
-	properties.rotation.label.addEventListener('click', ResetValue);
-	properties.scale.label.addEventListener('click', ResetValue);
-	properties.alpha.label.addEventListener('click', ResetValue);
-
+	
 	compProperties = document.getElementById('comp-properties');
 	compProperties.framerate = document.getElementById('framerate');
 	compProperties.loop = document.getElementById('loop');
@@ -612,4 +327,7 @@ function CreateLeftPanel() {
 	fileButtons.loadButton.addEventListener('click', LoadCompositor);
 	fileButtons.saveButton.addEventListener('click', SaveCompositor);
 	fileButtons.exportButton.addEventListener('click', ExportCompositor);
+
+	CreateAnimatorProperties();
+	CreateParticlesProperties();
 }
