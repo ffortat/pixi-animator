@@ -17,47 +17,74 @@ body {
 	height : auto;
 }
 
+h1 {
+	margin: 4px 0;
+	text-align: center;
+	color: #fff;
+	text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+}
+h2 {
+	margin: 4px 0;
+	padding: 0 0 0 4px;
+	font-size: 14px;
+	text-transform: uppercase;
+	color: #888;
+	text-shadow: 0 1px 0 #ddd;
+}
+
 canvas {
 	position : absolute;
 	top : 0;
 	left : 250px;
 }
 
-div#leftpanel {
+/*	Left panel	*/
+#leftpanel {
 	position : absolute;
 	top : 0;
 	left : 0;
 	bottom : 200px;
 	width : 250px;
-	background-color : #CCCCCC;
+	background-color : #ddd;
 	overflow : hidden;
 }
 
-div#leftpanel div#properties input[type='text'],
-div#leftpanel div#comp-properties input[type='text'] {
+#leftpanel #properties input[type='text'],
+#leftpanel #comp-properties input[type='text'] {
 	width : 50px;
 }
 
-div#leftpanel div#comp-properties {
-	margin-top : 50px;
+#leftpanel>div {
+	margin: 0 4px;
+	padding: 4px 0;
+	border-top: 1px dotted #000;
+}
+#leftpanel label {
+	width: 96px;
+	display: inline-block;
+}
+#leftpanel .reset {
+	width: 20px;
+	padding: 0;
+	color: #888;
+	text-shadow: 0 1px #fff;
+}
+#leftpanel .reset:hover {
+	color: #000;
 }
 
-div#leftpanel div#fileButtons {
-	position : absolute;
-	bottom : 1px;
-}
-
-div#rightpanel {
+/*	Right panel	*/
+#rightpanel {
 	position : absolute;
 	top : 0;
 	right : 0;
 	bottom : 200px;
 	width : 250px;
-	background-color : #CCCCCC;
+	background-color : #ddd;
 	overflow : hidden;
 }
 
-div#rightpanel div#spritesheets {
+#rightpanel #spritesheets {
 	position : absolute;
 	top : 0;
 	left : 0;
@@ -66,12 +93,19 @@ div#rightpanel div#spritesheets {
 	overflow : auto;
 }
 
-div#rightpanel div#spritesheets div.sprite {
+#rightpanel #spritesheets .sprite {
 	float : left;
 	margin : 0 0 1px 1px;
 }
 
-div#rightpanel div#uploadform {
+#rightpanel #spritesheets .sprite:nth-child(odd) {
+	background-color: #606;
+}
+#rightpanel #spritesheets .sprite:nth-child(even) {
+	background-color: #a0a;
+}
+
+#rightpanel #uploadform {
 	position : absolute;
 	left : 0;
 	right : 0;
@@ -79,22 +113,23 @@ div#rightpanel div#uploadform {
 	height : 50px;
 }
 
-div#rightpanel div#uploadform input[type='text'] {
+#rightpanel #uploadform input[type='text'] {
 	width : 50px;
 }
 
-div#timeline {
+/*	Timeline	*/
+#timeline {
 	position : absolute;
 	left : 0;
 	right : 0;
 	bottom : 0;
 	height : 200px;
-	background-color : #CCCCCC;
+	background-color : #ddd;
 	border-top : 1px solid black;
 	overflow : hidden;
 }
 
-div#timeline div.listing {
+#timeline div.listing {
 	position : absolute;
 	top : 0;
 	left : 0;
@@ -103,30 +138,30 @@ div#timeline div.listing {
 	border-right : 1px solid black;
 }
 
-div#timeline div.listing div.buttons {
+#timeline div.listing div.buttons {
 	border-bottom : 1px solid black;
 }
 
-div#timeline div.listing div.animator div.name {
+#timeline div.listing div.animator div.name {
 	position : relative;
 }
 
-div#timeline div.listing div.animator div.name {
+#timeline div.listing div.animator div.name {
 	position : relative;
 	padding-left : 5px;
 	border-bottom : 1px solid black;
 }
 
-div#timeline div.listing div.animator div.name:hover {
+#timeline div.listing div.animator div.name:hover {
 	cursor : pointer;
 }
 
-div#timeline div.listing div.animator.selected div.name {
+#timeline div.listing div.animator.selected div.name {
 	color : #EEEEEE;
 	background : #666666;
 }
 
-div#timeline div.timeline div.timeline-frame div.indicator {
+#timeline div.timeline div.timeline-frame div.indicator {
 	position : absolute;
 	left : -4px;
 	color : red;
@@ -134,7 +169,7 @@ div#timeline div.timeline div.timeline-frame div.indicator {
 	font-weight : bold;
 }
 
-div#timeline div.timeline {
+#timeline div.timeline {
 	position : absolute;
 	top : 0;
 	left : 250px;
@@ -143,7 +178,7 @@ div#timeline div.timeline {
 	overflow : auto;
 }
 
-div#timeline div.timeline div.timeline-cursor {
+#timeline div.timeline div.timeline-cursor {
 	position : absolute;
 	top : 0;
 	bottom : 0;
@@ -151,7 +186,7 @@ div#timeline div.timeline div.timeline-cursor {
 	width : 1px;
 }
 
-div#timeline div.timeline div.timeline-frame {
+#timeline div.timeline div.timeline-frame {
 	position : absolute;
 	top : 0;
 	bottom : 0;
@@ -159,12 +194,12 @@ div#timeline div.timeline div.timeline-frame {
 	width : 1px;
 }
 
-div#popin {
+#popin {
 	text-decoration : none;
 	color : white;
 }
 
-div#popin.load {
+#popin.load {
 	position : absolute;
 	top : 50%;
 	left : 50%;
@@ -178,24 +213,24 @@ div#popin.load {
 	overflow : auto;
 }
 
-div#popin.load ul {
+#popin.load ul {
 	margin : 0;
 	padding : 0;
 	list-style-type : none;
 	cursor : pointer;
 }
 
-div#popin.load ul li {
+#popin.load ul li {
 	font-size : 24px;
 	margin : 10px 10px 0px 10px;
-	color : #CCCCCC;
+	color : #ddd;
 }
 
-div#popin.load ul li:hover {
+#popin.load ul li:hover {
 	color : white;
 }
 
-div#popin.export {
+#popin.export {
 	position : absolute;
 	top : 50%;
 	left : 50%;
@@ -208,7 +243,7 @@ div#popin.export {
 	display : none;
 }
 
-div#popin.export p {
+#popin.export p {
 	position : relative;
 	width : 280;
 	margin : 30px auto;
