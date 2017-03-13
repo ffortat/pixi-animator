@@ -25,42 +25,77 @@
 			</div>
 			<div id="properties">
 				<h2>Properties</h2>
-				<h2 class="name"></h2>
-				<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
-				<div class="blend_mode">
-					<label for="blend_mode">Blend Mode: </label>
-					<button class="reset">R</button>
-					<select id="blend_mode">
-						<option value=""></option>
-					</select>
+				<div id="animatorProperties">
+					<h2 class="name"></h2>
+					<div class="texture">Texture: <input id="texture-id" type="text" disabled /></div>
+					<div class="blend_mode">
+						<label for="blend_mode">Blend Mode: </label>
+						<button class="reset">R</button>
+						<select id="blend_mode">
+							<option value=""></option>
+						</select>
+					</div>
+					<div class="pivot">
+						<label for="pivot-x">Pivot:</label>
+						<button class="reset">R</button>
+						<input type="text" id="pivot-x" placeholder="Pivot X" />
+						<input type="text" id="pivot-y" placeholder="Pivot Y" />
+					</div>
+					<div class="position">
+						<label for="">Position:</label>
+						<button class="reset">R</button>
+						<input id="position-x" type="text" placeholder="Pos X" />
+						<input id="position-y" type="text" placeholder="Pos Y" />
+					</div>
+					<div class="rotation">
+						<label for="">Rotation:</label>
+						<button class="reset">R</button>
+						<input id="rotation" type="text"placeholder="Rotation" />
+					</div>
+					<div class="scale">
+						<label for="">Scale:</label>
+						<button class="reset">R</button>
+						<input id="scale-x" type="text" placeholder="Scale X" />
+						<input id="scale-y" type="text" placeholder="Scale Y" />
+					</div>
+					<div class="alpha">
+						<label for="">Alpha:</label>
+						<button class="reset">R</button>
+						<input id="alpha" type="text" placeholder="Alpha" />
+					</div>
 				</div>
-				<div class="pivot">
-					<label for="pivot-x">Pivot:</label>
-					<button class="reset">R</button>
-					<input type="text" id="pivot-x" placeholder="Pivot X" />
-					<input type="text" id="pivot-y" placeholder="Pivot Y" />
+				<div id="particlesProperties">
+					<h2 class="name"></h2>
+					<div class="alpha-start">Alpha Start: <input class="zoom" type="range" min="0" max="1" value="1" step="0.01" /></div>
+					<div class="alpha-end">Alpha End: <input class="zoom" type="range" min="0" max="1" value="1" step="0.01" /></div>
+					<div class="scale">Scale: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="scale-mult">Scale multiplier: <input id="scale-multiplier" type="text" /></div>
+					<div class="color">Color: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="speed">Speed: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="speed-mult">Speed multiplier: <input id="scale-multiplier" type="text" /></div>
+					<div class="acceleration">Acceleration: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="max-speed">Maximum speed: <input id="scale-multiplier" type="text" /></div>
+					<div class="start-rotation">Start rotation: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="no-rotation">No particle rotation: <input id="loop" type="checkbox" /></div>
+					<div class="rotation">Rotation speed: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="lifetime">Lifetime: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="blend_mode">Blend Mode: 
+						<select id="blend_mode">
+							<option value=""></option>
+						</select>
+					</div>
+					<div class="spawn">Spawn Frequency: <input id="scale-multiplier" type="text" /></div>
+					<div class="emitter-lifetime">Emitter Lifetime: <input id="scale-multiplier" type="text" /></div>
+					<div class="max-particles">Max Particles: <input id="scale-multiplier" type="text" /></div>
+					<div class="spawn-type">Spawn Type: 
+						<select id="spawn-type">
+							<option value=""></option>
+						</select>
+					</div>
+					<div class="position">Spawn Position: <input id="scale-start" type="text" /> to <input id="scale-end" type="text" /></div>
+					<div class="queue">Add at back: <input id="loop" type="checkbox" /></div>
 				</div>
-				<div class="position">
-					<label for="">Position:</label>
-					<button class="reset">R</button>
-					<input id="position-x" type="text" placeholder="Pos X" />
-					<input id="position-y" type="text" placeholder="Pos Y" />
-				</div>
-				<div class="rotation">
-					<label for="">Rotation:</label>
-					<button class="reset">R</button>
-					<input id="rotation" type="text"placeholder="Rotation" />
-				</div>
-				<div class="scale">
-					<label for="">Scale:</label>
-					<button class="reset">R</button>
-					<input id="scale-x" type="text" placeholder="Scale X" />
-					<input id="scale-y" type="text" placeholder="Scale Y" />
-				</div>
-				<div class="alpha">
-					<label for="">Alpha:</label>
-					<button class="reset">R</button>
-					<input id="alpha" type="text" placeholder="Alpha" />
+			</div>
 				</div>
 			</div>
 		</div>
@@ -104,6 +139,7 @@
 		<script src="source/libs/pixi/dialog.js"></script>
 		<script src="source/libs/pixi/collider.js"></script>
 		<script src="source/libs/pixi/animator.js"></script>
+		<script src="source/libs/pixi/emitter.js"></script>
 		<script src="source/viewport.js"></script>
 		<script src="source/timeline.js"></script>
 		<script src="source/leftpanel.js"></script>
