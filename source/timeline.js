@@ -201,6 +201,7 @@ function CreateTimeline() {
 					name : name,
 					type : "emitter",
 					textures : [],
+					properties : {},
 					timeline : []
 				}
 			};

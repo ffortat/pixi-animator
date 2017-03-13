@@ -22,7 +22,7 @@ var compositorData = {
 	fps : 30,
 	loop : true,
 	length : 60,
-	spritesheets : [],
+	spritesheets : spritesheetLists.save,
 	elements : []
 };
 var elementsData = {};

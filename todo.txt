@@ -1,5 +1,5 @@
 TODO
-	- Test library for particles with testfile
+X - Test library for particles with testfile
 	- Add particles
 
 	- Tools (toolbox)

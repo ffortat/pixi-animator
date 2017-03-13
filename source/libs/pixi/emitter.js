@@ -5,6 +5,7 @@ function Emitter(emition, spritesheets) {
 	this.emitter;
 	this.timeline = [];
 	this.textures = [];
+	this.properties = {};
 
 	this.init(emition, spritesheets);
 }
@@ -53,7 +54,8 @@ Emitter.prototype.init = function (data, spritesheets) {
 
 	this.interpolate('position');
 
-	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
+	this.properties = data.properties;
+	// this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
 }
 
 Emitter.prototype.interpolate = function (property) {
@@ -115,15 +117,17 @@ Emitter.prototype.interpolate = function (property) {
 Emitter.prototype.getTextureSet = function (textureList) {
 	var textureSet = [];
 
-	textureList.forEach(function (textureId) {
-		textureSet.push(this.textures[textureId]);
-	}, this);
+	if (textureList) {
+		textureList.forEach(function (textureId) {
+			textureSet.push(this.textures[textureId]);
+		}, this);
+	} 
 
 	return textureSet;
 }
 
 Emitter.prototype.reset = function () {
-	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
+	// this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(this.properties.textures), this.properties);
 	this.tick(0);
 }
 

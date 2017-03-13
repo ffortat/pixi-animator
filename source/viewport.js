@@ -36,9 +36,11 @@ function movesprite(event) {
 }
 
 function releasesprite(event) {
-	SetPosition(new PIXI.Point(spriteGrabbed.element.x - parseFloat(properties.pivot.x.value), spriteGrabbed.element.y - parseFloat(properties.pivot.y.value)));
-	
-	spriteGrabbed = null;
+	if (spriteGrabbed) {
+		SetPosition(new PIXI.Point(spriteGrabbed.element.x - parseFloat(properties.pivot.x.value), spriteGrabbed.element.y - parseFloat(properties.pivot.y.value)));
+		
+		spriteGrabbed = null;
+	}
 }
 
 function resizeviewport(event) {
