@@ -4,13 +4,13 @@ function updateFrame(frame, force) {
 
 		var propertiesData;
 
-		properties.animator.texture.label.style.fontWeight = '';
-		properties.animator.blendmode.label.style.fontWeight = '';
-		properties.animator.pivot.label.style.fontWeight = '';
-		properties.animator.position.label.style.fontWeight = '';
-		properties.animator.rotation.label.style.fontWeight = '';
-		properties.animator.scale.label.style.fontWeight = '';
-		properties.animator.alpha.label.style.fontWeight = '';
+		properties.animator.texture.reset.style.fontWeight = '';
+		properties.animator.blendmode.reset.style.fontWeight = '';
+		properties.animator.pivot.reset.style.fontWeight = '';
+		properties.animator.position.reset.style.fontWeight = '';
+		properties.animator.rotation.reset.style.fontWeight = '';
+		properties.animator.scale.reset.style.fontWeight = '';
+		properties.animator.alpha.reset.style.fontWeight = '';
 
 		if (currentElement) {
 			propertiesData = {
@@ -36,7 +36,7 @@ function updateFrame(frame, force) {
 							propertiesData.texture = frameData.texture;
 
 							if (i === currentFrame) {
-								properties.animator.texture.label.style.fontWeight = 'bold';
+								properties.animator.texture.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -47,7 +47,7 @@ function updateFrame(frame, force) {
 							propertiesData.blendmode = frameData.blendmode;
 
 							if (i === currentFrame) {
-								properties.animator.blendmode.label.style.fontWeight = 'bold';
+								properties.animator.blendmode.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -58,7 +58,7 @@ function updateFrame(frame, force) {
 							propertiesData.pivot = {x : frameData.pivot.x, y : frameData.pivot.y};
 
 							if (i === currentFrame) {
-								properties.animator.pivot.label.style.fontWeight = 'bold';
+								properties.animator.pivot.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -69,7 +69,7 @@ function updateFrame(frame, force) {
 							propertiesData.position = {x : frameData.position.x, y : frameData.position.y};
 
 							if (i === currentFrame) {
-								properties.animator.position.label.style.fontWeight = 'bold';
+								properties.animator.position.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -80,7 +80,7 @@ function updateFrame(frame, force) {
 							propertiesData.rotation = frameData.rotation;
 
 							if (i === currentFrame) {
-								properties.animator.rotation.label.style.fontWeight = 'bold';
+								properties.animator.rotation.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -91,7 +91,7 @@ function updateFrame(frame, force) {
 							propertiesData.scale = {x : frameData.scale.x, y : frameData.scale.y};
 
 							if (i === currentFrame) {
-								properties.animator.scale.label.style.fontWeight = 'bold';
+								properties.animator.scale.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -102,7 +102,7 @@ function updateFrame(frame, force) {
 							propertiesData.alpha = frameData.alpha;
 
 							if (i === currentFrame) {
-								properties.animator.alpha.label.style.fontWeight = 'bold';
+								properties.animator.alpha.reset.style.fontWeight = 'bold';
 							}
 						}
 					}
@@ -153,7 +153,7 @@ function updateFrame(frame, force) {
 			};
 		}
 
-		SetProperties(propertiesData);
+		SetAnimatorProperties(propertiesData);
 
 		updateViewport(propertiesData);
 		compositor.goToFrame(currentFrame);
@@ -292,6 +292,13 @@ function ExportCompositor() {
 	timeline.popin.appendChild(p);
 	timeline.popin.style.display = 'block';
 	timeline.popin.classList.add('export');
+}
+
+function updateCompositor() {
+	refreshCompositor();
+
+	addIndicator(currentElement, currentFrame);
+	updateFrame(currentFrame, true);
 }
 
 function CreateLeftPanel() {

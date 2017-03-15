@@ -2,6 +2,10 @@ TODO
 X - Test library for particles with testfile
 	- Add particles
 
+	- Add record mode
+		- if disabled : change default values
+		- if enables : change values for a given frame
+
 	- Tools (toolbox)
 		- Select
 		- Move (ctrl click)

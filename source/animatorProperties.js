@@ -1,4 +1,16 @@
-function SetProperties(data) {
+function checkCurrentAnimatorElement() {
+	if (currentElement && currentElement.element.type === "animator") {
+		if (!currentElement.element.timeline[currentFrame]) {
+			currentElement.element.timeline[currentFrame] = {};
+		}
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function SetAnimatorProperties(data) {
 	properties.name.innerText = data.name;
 	properties.animator.texture.value = data.texture;
 	properties.animator.blendmode.value = data.blendmode;
@@ -32,120 +44,71 @@ function SetProperties(data) {
 function UseTexture(event) {
 	var id = parseInt(event.target.id.substr(event.target.id.indexOf('-') + 1));
 
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].texture = id;
 
 		if (currentElement.element.textures.indexOf(id) === -1) {
 			currentElement.element.textures.push(id);
 		}
 
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
 function SetBlendMode(event) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].blendmode = properties.animator.blendmode.value;
 
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
 function SetPivot(point) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].pivot = {
 			x : point.x,
 			y : point.y
 		};
 
-		refreshCompositor();
-
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
 function SetPosition(point) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].position = {
 			x : point.x,
 			y : point.y
 		};
 
-		refreshCompositor();
-
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
 function SetRotation(event) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].rotation = parseFloat(properties.animator.rotation.value);
 
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
 function SetScale(point) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].scale = {
 			x : point.x,
 			y : point.y
 		};
 
-		refreshCompositor();
-
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
 function SetAlpha(event) {
-	if (currentElement) {
-		if (!currentElement.element.timeline[currentFrame]) {
-			currentElement.element.timeline[currentFrame] = {};
-		}
-
+	if (checkCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].alpha = parseFloat(properties.animator.alpha.value);
 
-		refreshCompositor();
-	
-		addIndicator(currentElement, currentFrame);
-		updateFrame(currentFrame, true);
+		updateCompositor();
 	}
 }
 
@@ -156,43 +119,43 @@ function ResetAnimatorValue(event) {
 
 		if (frame) {
 			switch (event.target) {
-				case properties.animator.texture.label :
+				case properties.animator.texture.reset :
 					if (frame.texture !== undefined) {
 						delete frame.texture;
 						changed = true;
 					}
 					break;
-				case properties.animator.blendmode.label :
+				case properties.animator.blendmode.reset :
 					if (frame.blendmode !== undefined) {
 						delete frame.blendmode;
 						changed = true;
 					}
 					break;
-				case properties.animator.pivot.label :
+				case properties.animator.pivot.reset :
 					if (frame.pivot !== undefined) {
 						delete frame.pivot;
 						changed = true;
 					}
 					break;
-				case properties.animator.position.label :
+				case properties.animator.position.reset :
 					if (frame.position !== undefined) {
 						delete frame.position;
 						changed = true;
 					}
 					break;
-				case properties.animator.rotation.label :
+				case properties.animator.rotation.reset :
 					if (frame.rotation !== undefined) {
 						delete frame.rotation;
 						changed = true;
 					}
 					break;
-				case properties.animator.scale.label :
+				case properties.animator.scale.reset :
 					if (frame.scale !== undefined) {
 						delete frame.scale;
 						changed = true;
 					}
 					break;
-				case properties.animator.alpha.label :
+				case properties.animator.alpha.reset :
 					if (frame.alpha !== undefined) {
 						delete frame.alpha;
 						changed = true;
