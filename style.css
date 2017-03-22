@@ -77,9 +77,9 @@ canvas {
 	overflow : auto;
 }
 
-#leftpanel #properties #particlesProperties {
+/*#leftpanel #properties #particlesProperties {
 	display : block;
-}
+}*/
 
 #leftpanel>div {
 	margin: 0 4px;
@@ -169,21 +169,20 @@ canvas {
 	border-bottom : 1px solid black;
 }
 
-#timeline div.listing div.animator div.name {
-	position : relative;
-}
-
-#timeline div.listing div.animator div.name {
+#timeline div.listing div.animator div.name,
+#timeline div.listing div.emitter div.name {
 	position : relative;
 	padding-left : 5px;
 	border-bottom : 1px solid black;
 }
 
-#timeline div.listing div.animator div.name:hover {
+#timeline div.listing div.animator div.name:hover,
+#timeline div.listing div.emitter div.name:hover {
 	cursor : pointer;
 }
 
-#timeline div.listing div.animator.selected div.name {
+#timeline div.listing div.animator.selected div.name,
+#timeline div.listing div.emitter.selected div.name {
 	color : #EEEEEE;
 	background : #666666;
 }

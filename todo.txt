@@ -1,6 +1,8 @@
 TODO
 X - Test library for particles with testfile
-	- Add particles
+X - Add particles
+	- Fix & Tidy particles stuff
+	- Add particles preview
 
 	- Add record mode
 		- if disabled : change default values

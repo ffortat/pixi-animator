@@ -2,12 +2,231 @@ function checkCurrentEmitterElement() {
 	return (currentElement && currentElement.element.type === "emitter");
 }
 
+function UpdateParticlesProperties() {
+	properties.particles.alpha.start.reset.style.fontWeight = '';
+	properties.particles.alpha.end.reset.style.fontWeight = '';
+	properties.particles.scale.reset.style.fontWeight = '';
+	properties.particles.scalemult.reset.style.fontWeight = '';
+	properties.particles.color.reset.style.fontWeight = '';
+	properties.particles.speed.reset.style.fontWeight = '';
+	properties.particles.speedmult.reset.style.fontWeight = '';
+	properties.particles.acceleration.reset.style.fontWeight = '';
+	properties.particles.speedmax.reset.style.fontWeight = '';
+	properties.particles.startrotation.reset.style.fontWeight = '';
+	properties.particles.norotation.reset.style.fontWeight = '';
+	properties.particles.rotationspeed.reset.style.fontWeight = '';
+	properties.particles.particlelifetime.reset.style.fontWeight = '';
+	properties.particles.blendmode.reset.style.fontWeight = '';
+	properties.particles.spawn.reset.style.fontWeight = '';
+	properties.particles.emitterlifetime.reset.style.fontWeight = '';
+	properties.particles.maxparticles.reset.style.fontWeight = '';
+	properties.particles.spawntype.reset.style.fontWeight = '';
+	properties.particles.position.reset.style.fontWeight = '';
+	properties.particles.queue.reset.style.fontWeight = '';
+
+	var propertiesData = {
+		name : currentElement.element.name
+	};
+
+	// TODO take into account framedata
+	// for (var i = currentFrame; i >= 0; i -= 1) {
+		// var frameData = currentElement.element.timeline[i];
+
+		// if (frameData) {
+			// var set = true;
+
+			// if (propertiesData.texture === undefined) {
+			// 	set = false;
+			// 	if (frameData.texture !== undefined) {
+			// 		propertiesData.texture = frameData.texture;
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.texture.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (propertiesData.blendmode === undefined) {
+			// 	set = false;
+			// 	if (frameData.blendmode !== undefined) {
+			// 		propertiesData.blendmode = frameData.blendmode;
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.blendmode.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (propertiesData.pivot === undefined) {
+			// 	set = false;
+			// 	if (frameData.pivot !== undefined) {
+			// 		propertiesData.pivot = {x : frameData.pivot.x, y : frameData.pivot.y};
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.pivot.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (propertiesData.position === undefined) {
+			// 	set = false;
+			// 	if (frameData.position !== undefined) {
+			// 		propertiesData.position = {x : frameData.position.x, y : frameData.position.y};
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.position.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (propertiesData.rotation === undefined) {
+			// 	set = false;
+			// 	if (frameData.rotation !== undefined) {
+			// 		propertiesData.rotation = frameData.rotation;
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.rotation.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (propertiesData.scale === undefined) {
+			// 	set = false;
+			// 	if (frameData.scale !== undefined) {
+			// 		propertiesData.scale = {x : frameData.scale.x, y : frameData.scale.y};
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.scale.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (propertiesData.alpha === undefined) {
+			// 	set = false;
+			// 	if (frameData.alpha !== undefined) {
+			// 		propertiesData.alpha = frameData.alpha;
+
+			// 		if (i === currentFrame) {
+			// 			properties.animator.alpha.reset.style.fontWeight = 'bold';
+			// 		}
+			// 	}
+			// }
+
+			// if (set) {
+			// 	break;
+			// }
+		// }
+	// }
+
+	for (var property in currentElement.element.properties) {
+		if (propertiesData[property] === undefined) {
+			propertiesData[property] = currentElement.element.properties[property];
+		}
+	}
+	
+	SetParticlesProperties(propertiesData);
+	// updateViewport(propertiesData);
+}
+
+function SetParticlesProperties(data) {
+	properties.name.innerText = data.name;
+
+	// TODO display particles texture(s)
+	// properties.animator.texture.value = data.texture;
+
+	if (document.activeElement !== properties.particles.alpha.start) {
+		properties.particles.alpha.start.value = data.alpha.start;
+	}
+	if (document.activeElement !== properties.particles.alpha.end) {
+		properties.particles.alpha.end.value = data.alpha.end;
+	}
+	if (document.activeElement !== properties.particles.scale.start) {
+		properties.particles.scale.start.value = data.scale.start;
+	}
+	if (document.activeElement !== properties.particles.scale.end) {
+		properties.particles.scale.end.value = data.scale.end;
+	}
+	if (document.activeElement !== properties.particles.scalemult) {
+		properties.particles.scalemult.value = data.scale.minimumScaleMultiplier;
+	}
+	if (document.activeElement !== properties.particles.color.start) {
+		properties.particles.color.start.value = data.color.start;
+	}
+	if (document.activeElement !== properties.particles.color.end) {
+		properties.particles.color.end.value = data.color.end;
+	}
+	if (document.activeElement !== properties.particles.speed.start) {
+		properties.particles.speed.start.value = data.speed.start;
+	}
+	if (document.activeElement !== properties.particles.speed.end) {
+		properties.particles.speed.end.value = data.speed.end;
+	}
+	if (document.activeElement !== properties.particles.speedmult) {
+		properties.particles.speedmult.value = data.speed.minimumSpeedMultiplier;
+	}
+	if (document.activeElement !== properties.particles.acceleration.x) {
+		properties.particles.acceleration.x.value = data.acceleration.x;
+	}
+	if (document.activeElement !== properties.particles.acceleration.y) {
+		properties.particles.acceleration.y.value = data.acceleration.y;
+	}
+	if (document.activeElement !== properties.particles.speedmax) {
+		properties.particles.speedmax.value = data.maxSpeed;
+	}
+	if (document.activeElement !== properties.particles.startrotation.min) {
+		properties.particles.startrotation.min.value = data.startRotation.min;
+	}
+	if (document.activeElement !== properties.particles.startrotation.max) {
+		properties.particles.startrotation.max.value = data.startRotation.max;
+	}
+	if (document.activeElement !== properties.particles.norotation) {
+		properties.particles.norotation.value = data.noRotation;
+	}
+	if (document.activeElement !== properties.particles.rotationspeed.min) {
+		properties.particles.rotationspeed.min.value = data.rotationSpeed.min;
+	}
+	if (document.activeElement !== properties.particles.rotationspeed.max) {
+		properties.particles.rotationspeed.max.value = data.rotationSpeed.max;
+	}
+	if (document.activeElement !== properties.particles.particlelifetime.min) {
+		properties.particles.particlelifetime.min.value = data.lifetime.min;
+	}
+	if (document.activeElement !== properties.particles.particlelifetime.max) {
+		properties.particles.particlelifetime.max.value = data.lifetime.max;
+	}
+	if (document.activeElement !== properties.particles.blendmode) {
+		// TODO set value not working (capitalization ?)
+		properties.particles.blendmode.value = data.blendMode;
+	}
+	if (document.activeElement !== properties.particles.spawn) {
+		properties.particles.spawn.value = data.frequency;
+	}
+	if (document.activeElement !== properties.particles.emitterlifetime) {
+		properties.particles.emitterlifetime.value = data.emitterLifetime;
+	}
+	if (document.activeElement !== properties.particles.maxparticles) {
+		properties.particles.maxparticles.value = data.maxParticles;
+	}
+	if (document.activeElement !== properties.particles.spawntype) {
+		properties.particles.spawntype.value = data.spawnType;
+	}
+	if (document.activeElement !== properties.particles.position.x) {
+		properties.particles.position.x.value = data.pos.x;
+	}
+	if (document.activeElement !== properties.particles.position.y) {
+		properties.particles.position.y.value = data.pos.y;
+	}
+	if (document.activeElement !== properties.particles.queue) {
+		properties.particles.queue.value = data.addAtBack;
+	}
+}
+
 function UseParticlesTexture(event) {
 	// TODO add UI and adapt for particle emitters
 	var id = parseInt(event.target.id.substr(event.target.id.indexOf('-') + 1));
 
-	if (checkCurrentAnimatorElement()) {
-		currentElement.element.timeline[currentFrame].texture = id;
+	if (checkCurrentEmitterElement()) {
+		currentElement.element.properties.textures = [id];
 
 		if (currentElement.element.textures.indexOf(id) === -1) {
 			currentElement.element.textures.push(id);

@@ -37,7 +37,7 @@ function movesprite(event) {
 
 function releasesprite(event) {
 	if (spriteGrabbed) {
-		SetPosition(new PIXI.Point(spriteGrabbed.element.x - parseFloat(properties.pivot.x.value), spriteGrabbed.element.y - parseFloat(properties.pivot.y.value)));
+		SetPosition(new PIXI.Point(spriteGrabbed.element.x - parseFloat(properties.animator.pivot.x.value), spriteGrabbed.element.y - parseFloat(properties.animator.pivot.y.value)));
 		
 		spriteGrabbed = null;
 	}

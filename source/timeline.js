@@ -94,6 +94,9 @@ function DeleteElement(name) {
 }
 
 function SelectElement(name) {
+	properties.animator.style.display = 'none';
+	properties.particles.style.display = 'none';
+
 	for (var element in elementsData) {
 		elementsData[element].html.classList.remove('selected');
 	}
@@ -102,6 +105,12 @@ function SelectElement(name) {
 		currentElement = elementsData[name];
 
 		currentElement.html.classList.add('selected');
+
+		if (currentElement.element.type === 'animator') {
+			properties.animator.style.display = 'block';
+		} else if (currentElement.element.type === 'emitter') {
+			properties.particles.style.display = 'block';
+		}
 	} else {
 		currentElement = null;
 	}
@@ -201,7 +210,55 @@ function CreateTimeline() {
 					name : name,
 					type : "emitter",
 					textures : [],
-					properties : {},
+					properties : {
+						alpha : {
+							start : 1,
+							end : 0
+						}, 
+						scale : {
+							start : 0.1,
+							end : 0.01,
+							minimumScaleMultiplier : 1
+						},
+						color : {
+							start : '#e4f9ff',
+							end : '#3fcbff'
+						},
+						speed : {
+							start : 200,
+							end : 50,
+							minimumSpeedMultiplier : 1
+						},
+						acceleration : {
+							x : 0,
+							y : 0
+						},
+						maxSpeed : 0,
+						startRotation : {
+							min : 0,
+							max : 360
+						},
+						noRotation : false,
+						rotationSpeed : {
+							min : 0,
+							max : 0
+						},
+						lifetime : {
+							min : 0.2,
+							max : 0.8
+						},
+						blendMode : "normal",
+						frequency : 0.001,
+						emitterLifetime : -1,
+						maxParticles : 500,
+						pos : {
+							x : 0,
+							y : 0
+						},
+						addAtBack : false,
+						spawnType : 'point',
+						textures : []
+					},
 					timeline : []
 				}
 			};

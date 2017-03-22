@@ -2,161 +2,28 @@ function updateFrame(frame, force) {
 	if ((currentFrame !== frame || force)) {
 		currentFrame = frame;
 
-		var propertiesData;
-
-		properties.animator.texture.reset.style.fontWeight = '';
-		properties.animator.blendmode.reset.style.fontWeight = '';
-		properties.animator.pivot.reset.style.fontWeight = '';
-		properties.animator.position.reset.style.fontWeight = '';
-		properties.animator.rotation.reset.style.fontWeight = '';
-		properties.animator.scale.reset.style.fontWeight = '';
-		properties.animator.alpha.reset.style.fontWeight = '';
-
-		if (currentElement) {
-			propertiesData = {
-				name : currentElement.element.name,
-				texture : null,
-				blendmode : null,
-				pivot : null,
-				position : null,
-				rotation : null,
-				scale : null,
-				alpha : null
-			};
-
-			for (var i = currentFrame; i >= 0; i -= 1) {
-				var frameData = currentElement.element.timeline[i];
-
-				if (frameData) {
-					var set = true;
-
-					if (propertiesData.texture === null) {
-						set = false;
-						if (frameData.texture !== undefined) {
-							propertiesData.texture = frameData.texture;
-
-							if (i === currentFrame) {
-								properties.animator.texture.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (propertiesData.blendmode === null) {
-						set = false;
-						if (frameData.blendmode !== undefined) {
-							propertiesData.blendmode = frameData.blendmode;
-
-							if (i === currentFrame) {
-								properties.animator.blendmode.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (propertiesData.pivot === null) {
-						set = false;
-						if (frameData.pivot !== undefined) {
-							propertiesData.pivot = {x : frameData.pivot.x, y : frameData.pivot.y};
-
-							if (i === currentFrame) {
-								properties.animator.pivot.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (propertiesData.position === null) {
-						set = false;
-						if (frameData.position !== undefined) {
-							propertiesData.position = {x : frameData.position.x, y : frameData.position.y};
-
-							if (i === currentFrame) {
-								properties.animator.position.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (propertiesData.rotation === null) {
-						set = false;
-						if (frameData.rotation !== undefined) {
-							propertiesData.rotation = frameData.rotation;
-
-							if (i === currentFrame) {
-								properties.animator.rotation.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (propertiesData.scale === null) {
-						set = false;
-						if (frameData.scale !== undefined) {
-							propertiesData.scale = {x : frameData.scale.x, y : frameData.scale.y};
-
-							if (i === currentFrame) {
-								properties.animator.scale.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (propertiesData.alpha === null) {
-						set = false;
-						if (frameData.alpha !== undefined) {
-							propertiesData.alpha = frameData.alpha;
-
-							if (i === currentFrame) {
-								properties.animator.alpha.reset.style.fontWeight = 'bold';
-							}
-						}
-					}
-
-					if (set) {
-						break;
-					}
-				}
-			}
-
-			if (propertiesData.texture === null) {
-				propertiesData.texture = 'none';
-			}
-
-			if (propertiesData.blendmode === null) {
-				propertiesData.blendmode = 'NORMAL';
-			}
-
-			if (propertiesData.pivot === null) {
-				propertiesData.pivot = {x : 0, y : 0};
-			}
-
-			if (propertiesData.position === null) {
-				propertiesData.position = {x : 0, y : 0};
-			}
-
-			if (propertiesData.rotation === null) {
-				propertiesData.rotation = 0;
-			}
-
-			if (propertiesData.scale === null) {
-				propertiesData.scale = {x : 1, y : 1};
-			}
-
-			if (propertiesData.alpha === null) {
-				propertiesData.alpha = 1;
-			}
-		} else {
-			propertiesData = {
-				name : '',
-				texture : '',
-				blendmode : '',
-				pivot : {x : '', y : ''},
-				position : {x : '', y : ''},
-				rotation : '',
-				scale : {x : '', y : ''},
-				alpha : ''
-			};
+		if (checkCurrentAnimatorElement()) {
+			UpdateAnimatorProperties();
+		} else if (checkCurrentEmitterElement()) {
+			UpdateParticlesProperties();
 		}
 
-		SetAnimatorProperties(propertiesData);
-
-		updateViewport(propertiesData);
 		compositor.goToFrame(currentFrame);
+	}
+}
+
+function updateCompositor() {
+	refreshCompositor();
+
+	addIndicator(currentElement, currentFrame);
+	updateFrame(currentFrame, true);
+}
+
+function UseTexture(event) {
+	if (checkSetCurrentAnimatorElement()) {
+		UseAnimatorTexture(event);
+	} else if (checkCurrentEmitterElement()) {
+		UseParticlesTexture(event);
 	}
 }
 
@@ -292,13 +159,6 @@ function ExportCompositor() {
 	timeline.popin.appendChild(p);
 	timeline.popin.style.display = 'block';
 	timeline.popin.classList.add('export');
-}
-
-function updateCompositor() {
-	refreshCompositor();
-
-	addIndicator(currentElement, currentFrame);
-	updateFrame(currentFrame, true);
 }
 
 function CreateLeftPanel() {

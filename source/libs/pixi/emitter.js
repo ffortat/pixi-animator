@@ -55,7 +55,7 @@ Emitter.prototype.init = function (data, spritesheets) {
 	this.interpolate('position');
 
 	this.properties = data.properties;
-	// this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
+	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(data.properties.textures), data.properties);
 }
 
 Emitter.prototype.interpolate = function (property) {
@@ -127,7 +127,7 @@ Emitter.prototype.getTextureSet = function (textureList) {
 }
 
 Emitter.prototype.reset = function () {
-	// this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(this.properties.textures), this.properties);
+	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(this.properties.textures), this.properties);
 	this.tick(0);
 }
 

@@ -1,5 +1,9 @@
 function checkCurrentAnimatorElement() {
-	if (currentElement && currentElement.element.type === "animator") {
+	return (currentElement && currentElement.element.type === "animator");
+}
+
+function checkSetCurrentAnimatorElement() {
+	if (checkCurrentAnimatorElement()) {
 		if (!currentElement.element.timeline[currentFrame]) {
 			currentElement.element.timeline[currentFrame] = {};
 		}
@@ -8,6 +12,128 @@ function checkCurrentAnimatorElement() {
 	} else {
 		return false;
 	}
+}
+
+function UpdateAnimatorProperties() {
+	properties.animator.texture.reset.style.fontWeight = '';
+	properties.animator.blendmode.reset.style.fontWeight = '';
+	properties.animator.pivot.reset.style.fontWeight = '';
+	properties.animator.position.reset.style.fontWeight = '';
+	properties.animator.rotation.reset.style.fontWeight = '';
+	properties.animator.scale.reset.style.fontWeight = '';
+	properties.animator.alpha.reset.style.fontWeight = '';
+
+	var defaultProperties = {
+		texture : 'none',
+		blendmode : 'NORMAL',
+		pivot : {x : 0, y : 0},
+		position : {x : 0, y : 0},
+		rotation : 0,
+		scale : {x : 1, y : 1},
+		alpha : 1
+	};
+
+	var propertiesData = {
+		name : currentElement.element.name
+	};
+
+	for (var i = currentFrame; i >= 0; i -= 1) {
+		var frameData = currentElement.element.timeline[i];
+
+		if (frameData) {
+			var set = true;
+
+			if (propertiesData.texture === undefined) {
+				set = false;
+				if (frameData.texture !== undefined) {
+					propertiesData.texture = frameData.texture;
+
+					if (i === currentFrame) {
+						properties.animator.texture.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (propertiesData.blendmode === undefined) {
+				set = false;
+				if (frameData.blendmode !== undefined) {
+					propertiesData.blendmode = frameData.blendmode;
+
+					if (i === currentFrame) {
+						properties.animator.blendmode.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (propertiesData.pivot === undefined) {
+				set = false;
+				if (frameData.pivot !== undefined) {
+					propertiesData.pivot = {x : frameData.pivot.x, y : frameData.pivot.y};
+
+					if (i === currentFrame) {
+						properties.animator.pivot.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (propertiesData.position === undefined) {
+				set = false;
+				if (frameData.position !== undefined) {
+					propertiesData.position = {x : frameData.position.x, y : frameData.position.y};
+
+					if (i === currentFrame) {
+						properties.animator.position.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (propertiesData.rotation === undefined) {
+				set = false;
+				if (frameData.rotation !== undefined) {
+					propertiesData.rotation = frameData.rotation;
+
+					if (i === currentFrame) {
+						properties.animator.rotation.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (propertiesData.scale === undefined) {
+				set = false;
+				if (frameData.scale !== undefined) {
+					propertiesData.scale = {x : frameData.scale.x, y : frameData.scale.y};
+
+					if (i === currentFrame) {
+						properties.animator.scale.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (propertiesData.alpha === undefined) {
+				set = false;
+				if (frameData.alpha !== undefined) {
+					propertiesData.alpha = frameData.alpha;
+
+					if (i === currentFrame) {
+						properties.animator.alpha.reset.style.fontWeight = 'bold';
+					}
+				}
+			}
+
+			if (set) {
+				break;
+			}
+		}
+	}
+
+	for (var property in defaultProperties) {
+		if (propertiesData[property] === undefined) {
+			propertiesData[property] = defaultProperties[property];
+		}
+	}
+	
+	SetAnimatorProperties(propertiesData);
+	updateViewport(propertiesData);
 }
 
 function SetAnimatorProperties(data) {
@@ -41,10 +167,10 @@ function SetAnimatorProperties(data) {
 	}
 }
 
-function UseTexture(event) {
+function UseAnimatorTexture(event) {
 	var id = parseInt(event.target.id.substr(event.target.id.indexOf('-') + 1));
 
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].texture = id;
 
 		if (currentElement.element.textures.indexOf(id) === -1) {
@@ -56,7 +182,7 @@ function UseTexture(event) {
 }
 
 function SetBlendMode(event) {
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].blendmode = properties.animator.blendmode.value;
 
 		updateCompositor();
@@ -64,7 +190,7 @@ function SetBlendMode(event) {
 }
 
 function SetPivot(point) {
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].pivot = {
 			x : point.x,
 			y : point.y
@@ -75,7 +201,7 @@ function SetPivot(point) {
 }
 
 function SetPosition(point) {
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].position = {
 			x : point.x,
 			y : point.y
@@ -86,7 +212,7 @@ function SetPosition(point) {
 }
 
 function SetRotation(event) {
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].rotation = parseFloat(properties.animator.rotation.value);
 
 		updateCompositor();
@@ -94,7 +220,7 @@ function SetRotation(event) {
 }
 
 function SetScale(point) {
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].scale = {
 			x : point.x,
 			y : point.y
@@ -105,7 +231,7 @@ function SetScale(point) {
 }
 
 function SetAlpha(event) {
-	if (checkCurrentAnimatorElement()) {
+	if (checkSetCurrentAnimatorElement()) {
 		currentElement.element.timeline[currentFrame].alpha = parseFloat(properties.animator.alpha.value);
 
 		updateCompositor();
@@ -188,7 +314,7 @@ function CreateAnimatorProperties() {
 	properties.animator = document.getElementById('animatorProperties');
 
 	properties.animator.texture = document.getElementById('texture-id');
-	// properties.animator.texture.reset = properties.animator.texture.peviousElementSibling;
+	properties.animator.texture.reset = properties.animator.texture.previousElementSibling;
 
 	properties.animator.blendmode = document.getElementById('blend-mode');
 	properties.animator.blendmode.reset = properties.animator.blendmode.previousElementSibling;
@@ -249,7 +375,7 @@ function CreateAnimatorProperties() {
 
 	properties.animator.alpha.addEventListener('input', SetAlpha);
 
-	// properties.animator.texture.reset.addEventListener('click', ResetAnimatorValue);
+	properties.animator.texture.reset.addEventListener('click', ResetAnimatorValue);
 	properties.animator.blendmode.reset.addEventListener('click', ResetAnimatorValue);
 	properties.animator.pivot.reset.addEventListener('click', ResetAnimatorValue);
 	properties.animator.position.reset.addEventListener('click', ResetAnimatorValue);
