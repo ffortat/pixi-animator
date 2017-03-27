@@ -170,9 +170,49 @@
 							<option value="point">Point</option>
 							<option value="rectangle">Rectangle</option>
 							<option value="circle">Circle</option>
-							<option value="burst">Burst</option>
 							<option value="ring">Ring</option>
+							<option value="burst">Burst</option>
 						</select>
+					</div>
+					<div class="emission-rectangle">
+						<label>Emission Rectangle:</label>
+						<button class="reset">R</button>
+						<input id="emission-rectangle-x" type="text" placeholder="X" />
+						<input id="emission-rectangle-y" type="text" placeholder="Y" />
+						<input id="emission-rectangle-width" type="text" placeholder="Width" />
+						<input id="emission-rectangle-height" type="text" placeholder="Height" />
+					</div>
+					<div class="emission-circle">
+						<label>Emission Circle:</label>
+						<button class="reset">R</button>
+						<input id="emission-circle-x" type="text" placeholder="X" />
+						<input id="emission-circle-y" type="text" placeholder="Y" />
+						<input id="emission-circle-radius" type="text" placeholder="Radius" />
+					</div>
+					<div class="emission-ring">
+						<label>Emission Ring:</label>
+						<button class="reset">R</button>
+						<input id="emission-ring-x" type="text" placeholder="X" />
+						<input id="emission-ring-y" type="text" placeholder="Y" />
+						<input id="emission-ring-min" type="text" placeholder="Min Radius" />
+						<input id="emission-ring-max" type="text" placeholder="Max Radius" />
+					</div>
+					<div class="emission-burst">
+						<div class="burst-particles">
+							<label>Particles par Wave:</label>
+							<button class="reset">R</button>
+							<input id="burst-particles" type="text" placeholder="Particles" />
+						</div>
+						<div class="burst-spacing">
+							<label>Particle Spacing:</label>
+							<button class="reset">R</button>
+							<input id="burst-spacing" type="text" placeholder="Spacing" />
+						</div>
+						<div class="burst-angle">
+							<label>Start Angle:</label>
+							<button class="reset">R</button>
+							<input id="burst-angle" type="text" placeholder="Angle" />
+						</div>
 					</div>
 					<div class="emitter-position">
 						<label>Spawn Position:</label>
@@ -231,10 +271,10 @@
 		<script src="source/libs/pixi/collider.js"></script>
 		<script src="source/libs/pixi/animator.js"></script>
 		<script src="source/libs/pixi/emitter.js"></script>
-		<script src="source/viewport.js"></script>
-		<script src="source/timeline.js"></script>
 		<script src="source/animatorProperties.js"></script>
 		<script src="source/particlesProperties.js"></script>
+		<script src="source/viewport.js"></script>
+		<script src="source/timeline.js"></script>
 		<script src="source/leftpanel.js"></script>
 		<script src="source/rightpanel.js"></script>
 		<script src="source/editor.js"></script>

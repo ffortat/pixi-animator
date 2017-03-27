@@ -110,6 +110,7 @@ function SelectElement(name) {
 			properties.animator.style.display = 'block';
 		} else if (currentElement.element.type === 'emitter') {
 			properties.particles.style.display = 'block';
+			UpdateParticlesSpawntype(currentElement.element);
 		}
 	} else {
 		currentElement = null;

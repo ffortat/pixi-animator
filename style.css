@@ -69,6 +69,10 @@ canvas {
 	color : #333;
 }
 
+#leftpanel #properties label {
+	font-size : 0.8em;
+}
+
 #leftpanel #properties #animatorProperties,
 #leftpanel #properties #particlesProperties {
 	clear : both;

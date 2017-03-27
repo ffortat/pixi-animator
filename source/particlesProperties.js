@@ -195,8 +195,7 @@ function SetParticlesProperties(data) {
 		properties.particles.particlelifetime.max.value = data.lifetime.max;
 	}
 	if (document.activeElement !== properties.particles.blendmode) {
-		// TODO set value not working (capitalization ?)
-		properties.particles.blendmode.value = data.blendMode;
+		properties.particles.blendmode.value = data.blendMode.toUpperCase();
 	}
 	if (document.activeElement !== properties.particles.spawn) {
 		properties.particles.spawn.value = data.frequency;
@@ -376,9 +375,138 @@ function SetParticlesMaxparticles(event) {
 
 function SetParticlesSpawntype(event) {
 	if (checkCurrentEmitterElement()) {
-		currentElement.element.properties.spawnType = properties.particles.spawntype.value.toLowerCase();
+		if (currentElement.element.properties.spawnType !== properties.particles.spawntype.value.toLowerCase()) {
+			currentElement.element.properties.spawnType = properties.particles.spawntype.value.toLowerCase();
+			
+			UpdateParticlesSpawntype(currentElement.element);
+		}
+
+		switch (currentElement.element.properties.spawnType) {
+			case 'rectangle':
+				currentElement.element.properties.spawnRect = {
+					x : parseFloat(properties.particles.spawntype.properties.rectangle.x.value),
+					y : parseFloat(properties.particles.spawntype.properties.rectangle.y.value),
+					w : parseFloat(properties.particles.spawntype.properties.rectangle.width.value),
+					h : parseFloat(properties.particles.spawntype.properties.rectangle.height.value)
+				};
+				break;
+			case 'circle':
+				currentElement.element.properties.spawnRect = {
+					x : parseFloat(properties.particles.spawntype.properties.circle.x.value),
+					y : parseFloat(properties.particles.spawntype.properties.circle.y.value),
+					r : parseFloat(properties.particles.spawntype.properties.circle.radius.value)
+				};
+				break;
+			case 'ring':
+				currentElement.element.properties.spawnRect = {
+					x : parseFloat(properties.particles.spawntype.properties.ring.x.value),
+					y : parseFloat(properties.particles.spawntype.properties.ring.y.value),
+					r : parseFloat(properties.particles.spawntype.properties.ring.min.value),
+					minR : parseFloat(properties.particles.spawntype.properties.ring.max.value)
+				};
+				break;
+			case 'burst':
+				currentElement.element.properties.particlesPerWave = parseFloat(properties.particles.spawntype.properties.burst.particles.value);
+				currentElement.element.properties.particlesSpacing = parseFloat(properties.particles.spawntype.properties.burst.spacing.value);
+				currentElement.element.properties.angleStart = parseFloat(properties.particles.spawntype.properties.burst.angle.value);
+				break;
+		}
 
 		updateCompositor();
+	}
+}
+
+function UpdateParticlesSpawntype(element) {
+	for (var spawnType in properties.particles.spawntype.properties) {
+		properties.particles.spawntype.properties[spawnType].style.display = 'none';
+	}
+
+	if (element.properties.spawnType !== 'point') {
+		properties.particles.spawntype.properties[element.properties.spawnType].style.display = 'block';
+
+		switch (element.properties.spawnType) {
+			case 'rectangle':
+				if (element.properties.spawnRect === undefined) {
+					element.properties.spawnRect = {
+						x : 0,
+						y : 0,
+						w : 0,
+						h : 0
+					};
+
+					delete element.properties.spawnCircle;
+					delete element.properties.particlesPerWave;
+					delete element.properties.particlesSpacing;
+					delete element.properties.angleStart;
+				}
+
+				properties.particles.spawntype.properties.rectangle.x.value = element.properties.spawnRect.x;
+				properties.particles.spawntype.properties.rectangle.y.value = element.properties.spawnRect.y;
+				properties.particles.spawntype.properties.rectangle.width.value = element.properties.spawnRect.w;
+				properties.particles.spawntype.properties.rectangle.height.value = element.properties.spawnRect.h;
+				break;
+			case 'circle':
+				if (element.properties.spawnCircle === undefined) {
+					element.properties.spawnCircle = {
+						x : 0,
+						y : 0,
+						r : 0
+					};
+
+					delete element.properties.spawnRect;
+					delete element.properties.particlesPerWave;
+					delete element.properties.particlesSpacing;
+					delete element.properties.angleStart;
+				}
+
+				delete element.properties.spawnCircle.minR;
+				
+				properties.particles.spawntype.properties.circle.x.value = element.properties.spawnCircle.x;
+				properties.particles.spawntype.properties.circle.y.value = element.properties.spawnCircle.y;
+				properties.particles.spawntype.properties.circle.radius.value = element.properties.spawnCircle.r;
+				break;
+			case 'ring':
+				if (element.properties.spawnCircle === undefined) {
+					element.properties.spawnCircle = {
+						x : 0,
+						y : 0,
+						r : 0,
+						minR : 0
+					};
+
+					delete element.properties.spawnRect;
+					delete element.properties.particlesPerWave;
+					delete element.properties.particlesSpacing;
+					delete element.properties.angleStart;
+				}
+
+				if (element.properties.spawnCircle.minR === undefined) {
+					element.properties.spawnCircle.minR = 0;
+				}
+				
+				properties.particles.spawntype.properties.ring.x.value = element.properties.spawnCircle.x;
+				properties.particles.spawntype.properties.ring.y.value = element.properties.spawnCircle.y;
+				properties.particles.spawntype.properties.ring.min.value = element.properties.spawnCircle.r;
+				properties.particles.spawntype.properties.ring.max.value = element.properties.spawnCircle.minR;
+				break;
+			case 'burst':
+				if (element.properties.particlesPerWave === undefined ||
+					element.properties.particleSpacing === undefined ||
+					element.properties.angleStart === undefined) {
+					
+					element.properties.particlesPerWave = 1;
+					element.properties.particleSpacing = 0;
+					element.properties.angleStart = 0;
+
+					delete element.properties.spawnRect;
+					delete element.properties.spawnCircle;
+				}
+				
+				properties.particles.spawntype.properties.burst.particles.value = element.properties.particlesPerWave;
+				properties.particles.spawntype.properties.burst.spacing.value = element.properties.particleSpacing;
+				properties.particles.spawntype.properties.burst.angle.value = element.properties.angleStart;
+				break;
+		}
 	}
 }
 
@@ -521,6 +649,32 @@ function CreateParticlesProperties() {
 	properties.particles.spawntype = document.getElementById('spawn-type');
 	properties.particles.spawntype.reset = properties.particles.spawntype.previousElementSibling;
 
+	properties.particles.spawntype.properties = {};
+	properties.particles.spawntype.properties.rectangle = properties.particles.getElementsByClassName('emission-rectangle')[0];
+	properties.particles.spawntype.properties.rectangle.x = document.getElementById('emission-rectangle-x');
+	properties.particles.spawntype.properties.rectangle.y = document.getElementById('emission-rectangle-y');
+	properties.particles.spawntype.properties.rectangle.width = document.getElementById('emission-rectangle-width');
+	properties.particles.spawntype.properties.rectangle.height = document.getElementById('emission-rectangle-height');
+	properties.particles.spawntype.properties.rectangle.reset = properties.particles.spawntype.properties.rectangle.x.previousElementSibling;
+	properties.particles.spawntype.properties.circle = properties.particles.getElementsByClassName('emission-circle')[0];
+	properties.particles.spawntype.properties.circle.x = document.getElementById('emission-circle-x');
+	properties.particles.spawntype.properties.circle.y = document.getElementById('emission-circle-y');
+	properties.particles.spawntype.properties.circle.radius = document.getElementById('emission-circle-radius');
+	properties.particles.spawntype.properties.circle.reset = properties.particles.spawntype.properties.circle.x.previousElementSibling;
+	properties.particles.spawntype.properties.ring = properties.particles.getElementsByClassName('emission-ring')[0];
+	properties.particles.spawntype.properties.ring.x = document.getElementById('emission-ring-x');
+	properties.particles.spawntype.properties.ring.y = document.getElementById('emission-ring-y');
+	properties.particles.spawntype.properties.ring.min = document.getElementById('emission-ring-min');
+	properties.particles.spawntype.properties.ring.max = document.getElementById('emission-ring-max');
+	properties.particles.spawntype.properties.ring.reset = properties.particles.spawntype.properties.ring.x.previousElementSibling;
+	properties.particles.spawntype.properties.burst = properties.particles.getElementsByClassName('emission-burst')[0];
+	properties.particles.spawntype.properties.burst.particles = document.getElementById('burst-particles');
+	properties.particles.spawntype.properties.burst.particles.reset = properties.particles.spawntype.properties.burst.particles.previousElementSibling;
+	properties.particles.spawntype.properties.burst.spacing = document.getElementById('burst-spacing');
+	properties.particles.spawntype.properties.burst.spacing.reset = properties.particles.spawntype.properties.burst.spacing.previousElementSibling;
+	properties.particles.spawntype.properties.burst.angle = document.getElementById('burst-angle');
+	properties.particles.spawntype.properties.burst.angle.reset = properties.particles.spawntype.properties.burst.angle.previousElementSibling;
+
 	properties.particles.position = {};
 	properties.particles.position.x = document.getElementById('emitter-position-x');
 	properties.particles.position.y = document.getElementById('emitter-position-y');
@@ -562,6 +716,20 @@ function CreateParticlesProperties() {
 	properties.particles.emitterlifetime.addEventListener('input', SetParticlesEmitterlifetime);
 	properties.particles.maxparticles.addEventListener('input', SetParticlesMaxparticles);
 	properties.particles.spawntype.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rectangle.x.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rectangle.y.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rectangle.width.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rectangle.height.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.circle.x.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.circle.y.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.circle.radius.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.ring.x.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.ring.y.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.ring.min.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.ring.max.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.burst.particles.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.burst.spacing.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.burst.angle.addEventListener('input', SetParticlesSpawntype);
 	properties.particles.position.x.addEventListener('input', SetParticlesPosition);
 	properties.particles.position.y.addEventListener('input', SetParticlesPosition);
 	properties.particles.queue.addEventListener('change', SetParticlesQueue);
@@ -584,6 +752,12 @@ function CreateParticlesProperties() {
 	properties.particles.emitterlifetime.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.maxparticles.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.spawntype.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.rectangle.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.circle.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.ring.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.burst.particles.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.burst.spacing.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.burst.angle.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.position.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.queue.reset.addEventListener('click', ResetParticlesValue);
 }
