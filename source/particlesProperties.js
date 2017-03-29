@@ -131,7 +131,7 @@ function UpdateParticlesProperties() {
 function SetParticlesProperties(data) {
 	properties.name.innerText = data.name;
 
-	// TODO display particles texture(s)
+	// TODO(later) display particles texture(s)
 	// properties.animator.texture.value = data.texture;
 
 	if (document.activeElement !== properties.particles.alpha.start) {
@@ -382,23 +382,23 @@ function SetParticlesSpawntype(event) {
 		}
 
 		switch (currentElement.element.properties.spawnType) {
-			case 'rectangle':
+			case 'rect':
 				currentElement.element.properties.spawnRect = {
-					x : parseFloat(properties.particles.spawntype.properties.rectangle.x.value),
-					y : parseFloat(properties.particles.spawntype.properties.rectangle.y.value),
-					w : parseFloat(properties.particles.spawntype.properties.rectangle.width.value),
-					h : parseFloat(properties.particles.spawntype.properties.rectangle.height.value)
+					x : parseFloat(properties.particles.spawntype.properties.rect.x.value),
+					y : parseFloat(properties.particles.spawntype.properties.rect.y.value),
+					w : parseFloat(properties.particles.spawntype.properties.rect.width.value),
+					h : parseFloat(properties.particles.spawntype.properties.rect.height.value)
 				};
 				break;
 			case 'circle':
-				currentElement.element.properties.spawnRect = {
+				currentElement.element.properties.spawnCircle = {
 					x : parseFloat(properties.particles.spawntype.properties.circle.x.value),
 					y : parseFloat(properties.particles.spawntype.properties.circle.y.value),
 					r : parseFloat(properties.particles.spawntype.properties.circle.radius.value)
 				};
 				break;
 			case 'ring':
-				currentElement.element.properties.spawnRect = {
+				currentElement.element.properties.spawnCircle = {
 					x : parseFloat(properties.particles.spawntype.properties.ring.x.value),
 					y : parseFloat(properties.particles.spawntype.properties.ring.y.value),
 					r : parseFloat(properties.particles.spawntype.properties.ring.min.value),
@@ -407,7 +407,7 @@ function SetParticlesSpawntype(event) {
 				break;
 			case 'burst':
 				currentElement.element.properties.particlesPerWave = parseFloat(properties.particles.spawntype.properties.burst.particles.value);
-				currentElement.element.properties.particlesSpacing = parseFloat(properties.particles.spawntype.properties.burst.spacing.value);
+				currentElement.element.properties.particleSpacing = parseFloat(properties.particles.spawntype.properties.burst.spacing.value);
 				currentElement.element.properties.angleStart = parseFloat(properties.particles.spawntype.properties.burst.angle.value);
 				break;
 		}
@@ -425,7 +425,7 @@ function UpdateParticlesSpawntype(element) {
 		properties.particles.spawntype.properties[element.properties.spawnType].style.display = 'block';
 
 		switch (element.properties.spawnType) {
-			case 'rectangle':
+			case 'rect':
 				if (element.properties.spawnRect === undefined) {
 					element.properties.spawnRect = {
 						x : 0,
@@ -436,14 +436,14 @@ function UpdateParticlesSpawntype(element) {
 
 					delete element.properties.spawnCircle;
 					delete element.properties.particlesPerWave;
-					delete element.properties.particlesSpacing;
+					delete element.properties.particleSpacing;
 					delete element.properties.angleStart;
 				}
 
-				properties.particles.spawntype.properties.rectangle.x.value = element.properties.spawnRect.x;
-				properties.particles.spawntype.properties.rectangle.y.value = element.properties.spawnRect.y;
-				properties.particles.spawntype.properties.rectangle.width.value = element.properties.spawnRect.w;
-				properties.particles.spawntype.properties.rectangle.height.value = element.properties.spawnRect.h;
+				properties.particles.spawntype.properties.rect.x.value = element.properties.spawnRect.x;
+				properties.particles.spawntype.properties.rect.y.value = element.properties.spawnRect.y;
+				properties.particles.spawntype.properties.rect.width.value = element.properties.spawnRect.w;
+				properties.particles.spawntype.properties.rect.height.value = element.properties.spawnRect.h;
 				break;
 			case 'circle':
 				if (element.properties.spawnCircle === undefined) {
@@ -455,7 +455,7 @@ function UpdateParticlesSpawntype(element) {
 
 					delete element.properties.spawnRect;
 					delete element.properties.particlesPerWave;
-					delete element.properties.particlesSpacing;
+					delete element.properties.particleSpacing;
 					delete element.properties.angleStart;
 				}
 
@@ -476,7 +476,7 @@ function UpdateParticlesSpawntype(element) {
 
 					delete element.properties.spawnRect;
 					delete element.properties.particlesPerWave;
-					delete element.properties.particlesSpacing;
+					delete element.properties.particleSpacing;
 					delete element.properties.angleStart;
 				}
 
@@ -507,6 +507,12 @@ function UpdateParticlesSpawntype(element) {
 				properties.particles.spawntype.properties.burst.angle.value = element.properties.angleStart;
 				break;
 		}
+	} else {
+		delete element.properties.spawnRect;
+		delete element.properties.spawnCircle;
+		delete element.properties.particlesPerWave;
+		delete element.properties.particleSpacing;
+		delete element.properties.angleStart;
 	}
 }
 
@@ -650,12 +656,12 @@ function CreateParticlesProperties() {
 	properties.particles.spawntype.reset = properties.particles.spawntype.previousElementSibling;
 
 	properties.particles.spawntype.properties = {};
-	properties.particles.spawntype.properties.rectangle = properties.particles.getElementsByClassName('emission-rectangle')[0];
-	properties.particles.spawntype.properties.rectangle.x = document.getElementById('emission-rectangle-x');
-	properties.particles.spawntype.properties.rectangle.y = document.getElementById('emission-rectangle-y');
-	properties.particles.spawntype.properties.rectangle.width = document.getElementById('emission-rectangle-width');
-	properties.particles.spawntype.properties.rectangle.height = document.getElementById('emission-rectangle-height');
-	properties.particles.spawntype.properties.rectangle.reset = properties.particles.spawntype.properties.rectangle.x.previousElementSibling;
+	properties.particles.spawntype.properties.rect = properties.particles.getElementsByClassName('emission-rectangle')[0];
+	properties.particles.spawntype.properties.rect.x = document.getElementById('emission-rectangle-x');
+	properties.particles.spawntype.properties.rect.y = document.getElementById('emission-rectangle-y');
+	properties.particles.spawntype.properties.rect.width = document.getElementById('emission-rectangle-width');
+	properties.particles.spawntype.properties.rect.height = document.getElementById('emission-rectangle-height');
+	properties.particles.spawntype.properties.rect.reset = properties.particles.spawntype.properties.rect.x.previousElementSibling;
 	properties.particles.spawntype.properties.circle = properties.particles.getElementsByClassName('emission-circle')[0];
 	properties.particles.spawntype.properties.circle.x = document.getElementById('emission-circle-x');
 	properties.particles.spawntype.properties.circle.y = document.getElementById('emission-circle-y');
@@ -716,10 +722,10 @@ function CreateParticlesProperties() {
 	properties.particles.emitterlifetime.addEventListener('input', SetParticlesEmitterlifetime);
 	properties.particles.maxparticles.addEventListener('input', SetParticlesMaxparticles);
 	properties.particles.spawntype.addEventListener('input', SetParticlesSpawntype);
-	properties.particles.spawntype.properties.rectangle.x.addEventListener('input', SetParticlesSpawntype);
-	properties.particles.spawntype.properties.rectangle.y.addEventListener('input', SetParticlesSpawntype);
-	properties.particles.spawntype.properties.rectangle.width.addEventListener('input', SetParticlesSpawntype);
-	properties.particles.spawntype.properties.rectangle.height.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rect.x.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rect.y.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rect.width.addEventListener('input', SetParticlesSpawntype);
+	properties.particles.spawntype.properties.rect.height.addEventListener('input', SetParticlesSpawntype);
 	properties.particles.spawntype.properties.circle.x.addEventListener('input', SetParticlesSpawntype);
 	properties.particles.spawntype.properties.circle.y.addEventListener('input', SetParticlesSpawntype);
 	properties.particles.spawntype.properties.circle.radius.addEventListener('input', SetParticlesSpawntype);
@@ -752,7 +758,7 @@ function CreateParticlesProperties() {
 	properties.particles.emitterlifetime.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.maxparticles.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.spawntype.reset.addEventListener('click', ResetParticlesValue);
-	properties.particles.spawntype.properties.rectangle.reset.addEventListener('click', ResetParticlesValue);
+	properties.particles.spawntype.properties.rect.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.spawntype.properties.circle.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.spawntype.properties.ring.reset.addEventListener('click', ResetParticlesValue);
 	properties.particles.spawntype.properties.burst.particles.reset.addEventListener('click', ResetParticlesValue);

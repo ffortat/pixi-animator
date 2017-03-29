@@ -28,6 +28,7 @@ var compositorData = {
 var elementsData = {};
 var compositor = new Compositor(compositorData);
 var container = new PIXI.Container();
+var subContainer = new PIXI.Container();
 var axis = new PIXI.Graphics();
 var pivot = new PIXI.Graphics();
 
@@ -40,6 +41,7 @@ var currentFrame = 0;
 var currentElement = null;
 var spriteIndex = 0;
 var spriteGrabbed = null;
+var currentOperation = 'none';
 
 function LoadEditor(name) {
 	if (name === undefined) {

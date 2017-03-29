@@ -108,9 +108,11 @@ function SelectElement(name) {
 
 		if (currentElement.element.type === 'animator') {
 			properties.animator.style.display = 'block';
+			resizeproperties();
 		} else if (currentElement.element.type === 'emitter') {
 			properties.particles.style.display = 'block';
 			UpdateParticlesSpawntype(currentElement.element);
+			resizeproperties();
 		}
 	} else {
 		currentElement = null;

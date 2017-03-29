@@ -1,26 +1,9 @@
 TODO
-X - Test library for particles with testfile
-X - Add particles
-	- Fix & Tidy particles stuff
-	- Add particles preview
-
-	- Add record mode
-		- if disabled : change default values
-		- if enables : change values for a given frame
-
 	- Tools (toolbox)
-		- Select
-		- Move (ctrl click)
-		- Move pivot (-->offset) (middle click)
-		- Rotate (Alt click)
-		- Scale (shift click)
-		- Move viewport (Space + click)
-		- Zoom (scroll) (reset : ctrl + click molette)
 		- Move indicator in timeline
 		- shortcut next/previous frame
 	- set cursors for tools (arrows for move, crosshair for move pivot)
-
-	- Add frame around sprite in viewport (survol ou permanent)
+	
 	- Rework pivot / position (pivot should follow position)
 	- rename pivot to offset
 
@@ -31,4 +14,13 @@ X - Add particles
 		- acceleration
 		- deceleration
 		- square (?)
+
+	- Add particles preview
+	- Add particle textures listing & preview (UI)
+	- Add record mode
+		- if disabled : change default values
+		- if enables : change values for a given frame
+
+	- Add frame around sprite in viewport (survol ou permanent)
+
 	- Save as

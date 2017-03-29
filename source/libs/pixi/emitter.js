@@ -127,7 +127,8 @@ Emitter.prototype.getTextureSet = function (textureList) {
 }
 
 Emitter.prototype.reset = function () {
-	this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(this.properties.textures), this.properties);
+	// this.emitter = new PIXI.particles.Emitter(this, this.getTextureSet(this.properties.textures), this.properties);
+	this.emitter.emit.false;
 	this.tick(0);
 }
 

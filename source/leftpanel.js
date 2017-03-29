@@ -1,3 +1,8 @@
+function resizeproperties(event) {
+	properties.particles.style.height = (document.getElementById('leftpanel').offsetHeight - properties.particles.offsetTop - 5) + 'px';
+	properties.animator.style.height = (document.getElementById('leftpanel').offsetHeight - properties.animator.offsetTop - 5) + 'px';
+}
+
 function updateFrame(frame, force) {
 	if ((currentFrame !== frame || force)) {
 		currentFrame = frame;
@@ -13,6 +18,10 @@ function updateFrame(frame, force) {
 }
 
 function updateCompositor() {
+	if (compositor.playing) {
+		timeline.playButton.click();
+	}
+
 	refreshCompositor();
 
 	addIndicator(currentElement, currentFrame);
@@ -140,7 +149,7 @@ function ExportCompositor() {
 		elements : compositorData.elements
 	};
 
-	var link = 'data:application/octet-stream;base64,' + btoa(JSON.stringify(exportCompositor));
+	var link = 'data:application/octet-stream;base64,' + btoa(JSON.stringify(exportCompositor, null, '\t'));
 
 	var p = document.createElement('p');
 	var a = document.createElement('a');
@@ -197,4 +206,6 @@ function CreateLeftPanel() {
 
 	CreateAnimatorProperties();
 	CreateParticlesProperties();
+
+	window.addEventListener('resize', resizeproperties);
 }
