@@ -14,6 +14,8 @@ function updateFrame(frame, force) {
 		}
 
 		compositor.goToFrame(currentFrame);
+
+		setCursorPosition(frame);
 	}
 }
 

@@ -1,11 +1,5 @@
 TODO
-	- Tools (toolbox)
-		- Move indicator in timeline
-		- shortcut next/previous frame
-	- set cursors for tools (arrows for move, crosshair for move pivot)
-	
-	- Rework pivot / position (pivot should follow position)
-	- rename pivot to offset
+	- Add frame around sprite in viewport (survol ou permanent)
 
 	- sprite interpolation (dynamic)
 		- add indicator on which frame change (i grey ?)
@@ -21,6 +15,5 @@ TODO
 		- if disabled : change default values
 		- if enables : change values for a given frame
 
-	- Add frame around sprite in viewport (survol ou permanent)
-
 	- Save as
+	- rename pivot to offset

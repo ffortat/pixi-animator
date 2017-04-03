@@ -1,6 +1,39 @@
+function viewportKeydown(keyCode) {
+	currentOperation = 'none';
+
+	switch (keyCode) {
+		case keys.ctrl:
+			currentOperation = 'move';
+			document.body.style.cursor = '-webkit-grab';
+			break;
+		case keys.alt:
+			currentOperation = 'rotate';
+			document.body.style.cursor = 'not-allowed';
+			break;
+		case keys.shift:
+			currentOperation = 'scale';
+			document.body.style.cursor = 'move';
+			break;
+		case keys.x:
+			if (currentFrame > 0) {
+				updateFrame(currentFrame - 1);
+			}
+			break;
+		case keys.c:
+			if (currentFrame < compositorData.length - 1) {
+				updateFrame(currentFrame + 1);
+			}
+			break;
+	}
+}
+
+function viewportKeyup(keyCode) {
+	currentOperation = 'none';
+	document.body.style.cursor = 'auto';
+}
+
 function grabsprite(event) {
 	var name;
-	currentOperation = 'none';
 
 	if (key.down[keys.space]) {
 		if (event.button === 0) {
@@ -20,20 +53,10 @@ function grabsprite(event) {
 					};
 				}
 
-
-				if (event.button === 0) {
-					if (event.ctrlKey) {
-						currentOperation = 'move';
-					} else if (event.altKey) {
-						currentOperation = 'rotate';
-					} else if (event.shiftKey) {
-						currentOperation = 'scale';
-					}
-				} else if (event.button === 1) {
+				if (event.button === 1) {
 					currentOperation = 'pivot';
+					document.body.style.cursor = 'crosshair';
 				}
-
-				console.log(element)
 
 				spriteGrabbed = {
 					element : element,
@@ -51,40 +74,52 @@ function grabsprite(event) {
 }
 
 function movesprite(event) {
-	if (spriteGrabbed) {
-		switch (currentOperation) {
-			case 'move':
+	switch (currentOperation) {
+		case 'move':
+			if (spriteGrabbed) {
 				spriteGrabbed.element.x += event.movementX;
 				spriteGrabbed.element.y += event.movementY;
-				break;
-			case 'rotate':
+
+				properties.animator.position.x.value = spriteGrabbed.element.x - parseFloat(properties.animator.pivot.x.value);
+				properties.animator.position.y.value = spriteGrabbed.element.y - parseFloat(properties.animator.pivot.y.value);
+			}
+			document.body.style.cursor = '-webkit-grab';
+			break;
+		case 'rotate':
+			if (spriteGrabbed) {
 				spriteGrabbed.element.rotation += event.movementX / 100;
 				properties.animator.rotation.value = spriteGrabbed.element.rotation;
-				break;
-			case 'scale':
+			}
+			break;
+			document.body.style.cursor = 'not-allowed';
+		case 'scale':
+			if (spriteGrabbed) {
 				spriteGrabbed.element.scale.x += event.movementX / 100;
 				spriteGrabbed.element.scale.y += event.movementY / 100;
 
 				properties.animator.scale.x.value = spriteGrabbed.element.scale.x;
 				properties.animator.scale.y.value = spriteGrabbed.element.scale.y;
-				break;
-			case 'pivot':
-				pivot.x += event.movementX;
-				pivot.y += event.movementY;
+			}
+			document.body.style.cursor = 'move';
+			break;
+		case 'pivot':
+			pivot.x += event.movementX;
+			pivot.y += event.movementY;
 
-				properties.animator.pivot.x.value = parseFloat(properties.animator.pivot.x.value) + event.movementX;
-				properties.animator.pivot.y.value = parseFloat(properties.animator.pivot.y.value) + event.movementY;
-				break;
-		}
-	} else if (currentOperation === 'moveView') {
-		container.x += event.movementX;
-		container.y += event.movementY;
+			properties.animator.pivot.x.value = parseFloat(properties.animator.pivot.x.value) + event.movementX;
+			properties.animator.pivot.y.value = parseFloat(properties.animator.pivot.y.value) + event.movementY;
+			break;
+		case 'moveView':
+			container.x += event.movementX;
+			container.y += event.movementY;
+			break;
 	}
+
 }
 
 function releasesprite(event) {
 	if (spriteGrabbed) {
-		switch (spriteGrabbed.currentOperation) {
+		switch (currentOperation) {
 			case 'move':
 				SetPosition(new PIXI.Point(spriteGrabbed.element.x - parseFloat(properties.animator.pivot.x.value), spriteGrabbed.element.y - parseFloat(properties.animator.pivot.y.value)));
 				break;
@@ -105,6 +140,7 @@ function releasesprite(event) {
 	}
 
 	currentOperation = 'none';
+	document.body.style.cursor = 'auto';
 }
 
 function scroll(event) {
@@ -147,9 +183,9 @@ function refreshCompositor() {
 function updateViewport(data) {
 	pivot.clear();
 
-	if (typeof(data.pivot.x) === 'number') {
+	if (typeof(data.pivot.x) === 'number' && typeof(data.position.x) === 'number') {
 		pivot.lineStyle(2, 0x00FF00, 1);
-		pivot.drawCircle(data.pivot.x, data.pivot.y, 5);
+		pivot.drawCircle(data.pivot.x + data.position.x, data.pivot.y + data.position.y, 5);
 	}
 }
 
@@ -169,6 +205,8 @@ function CreateViewport() {
 
 	centerviewport();
 
+	key.on('down', viewportKeydown);
+	key.on('up', viewportKeyup);
 	renderer.view.addEventListener('mousedown', grabsprite);
 	renderer.view.addEventListener('mousemove', movesprite);
 	renderer.view.addEventListener('mouseup', releasesprite);

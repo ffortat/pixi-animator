@@ -1,51 +1,102 @@
 function grabcursor(event) {
 	if (event.button === 0) {
-		cursorGrabbed = true;
-		movecursor(event);
+		if (event.target.classList.contains('indicator')) {
+			event.preventDefault();
+
+			indicatorGrabbed = {
+				startIndex : parseInt(event.target.parentElement.id.substr(event.target.parentElement.id.indexOf('-') + 1)),
+				currentIndex : parseInt(event.target.parentElement.id.substr(event.target.parentElement.id.indexOf('-') + 1)),
+				element : event.target.className.split(' ')[1].substr(1),
+				html : event.target
+			};
+		} else {
+			cursorGrabbed = true;
+			movecursor(event);
+		}
 	}
 }
 
 function movecursor(event) {
+	var left = 0;
+	var target = event.target;
+
+	if (target.className === 'timeline') {
+		left += target.scrollLeft;
+	}
+
+	while (target.className !== 'timeline') {
+		left += target.offsetLeft;
+		target = target.parentElement;
+	}
+
+	var index = Math.round((left + event.offsetX) / timeline.space);
+	index = Math.max(1, Math.min(compositorData.length, index)) - 1;
+
 	if (cursorGrabbed) {
-		var left = 0;
-		var target = event.target;
+		updateFrame(index);
+	} else if (indicatorGrabbed) {
+		indicatorGrabbed.currentIndex = index;
+		indicatorGrabbed.html.parentElement.removeChild(indicatorGrabbed.html);
+		document.getElementById('frame-' + index).appendChild(indicatorGrabbed.html);
+	}
 
-		if (target.className === 'timeline') {
-			left += target.scrollLeft;
-		}
-
-		while (target.className !== 'timeline') {
-			left += target.offsetLeft;
-			target = target.parentElement;
-		}
-
-		var index = Math.round((left + event.offsetX) / timeline.space);
-		index = Math.max(1, Math.min(compositorData.length, index));
-
-		timeline.cursor.style.left = (index * timeline.space) + 'px';
-
-		updateFrame(index - 1);
+	if (event.target.classList.contains('indicator')) {
+		document.body.style.cursor = '-webkit-grab';
+	} else {
+		document.body.style.cursor = 'auto';
 	}
 }
 
 function releasecursor(event) {
 	if (event.button === 0) {
+		if (indicatorGrabbed && indicatorGrabbed.startIndex !== indicatorGrabbed.currentIndex) {
+			var element = elementsData[indicatorGrabbed.element].element;
+
+			if (element) {
+				if (!element.timeline[indicatorGrabbed.currentIndex]) {
+					element.timeline[indicatorGrabbed.currentIndex] = {};
+				}
+
+				for (var key in element.timeline[indicatorGrabbed.startIndex]) {
+					element.timeline[indicatorGrabbed.currentIndex][key] = element.timeline[indicatorGrabbed.startIndex][key];
+				}
+
+				element.timeline[indicatorGrabbed.startIndex] = null;
+
+				if (indicatorGrabbed.html.parentElement.getElementsByClassName(indicatorGrabbed.html.className.split(' ')[1]).length > 1) {
+					indicatorGrabbed.html.parentElement.removeChild(indicatorGrabbed.html);
+				}
+				
+				updateCompositor();
+			} else {
+				indicatorGrabbed.html.parentElement.removeChild(indicatorGrabbed.html);
+				document.getElementById('frame-' + indicatorGrabbed.startIndex).appendChild(indicatorGrabbed.html);
+			}
+		}
+
 		cursorGrabbed = false;
+		indicatorGrabbed = null;
 	}
 }
 
+function setCursorPosition(index) {
+	timeline.cursor.style.left = ((index + 1) * timeline.space) + 'px';
+}
+
 function addIndicator(element, frame) {
-	var bar = timeline.framebars.getElementsByClassName('timeline-frame')[frame];
+	if (element) {
+		var bar = timeline.framebars.getElementsByClassName('timeline-frame')[frame];
 
-	if (bar.getElementsByClassName('i' + element.element.name).length === 0) {
-		var div = document.createElement('div');
-		div.classList.add('indicator');
-		div.classList.add('i' + element.element.name);
-		div.style.top = (element.html.offsetTop) + 'px';
-		// div.style.left = (element.html.offsetWidth + (frame + 1) * timeline.space - 3) + 'px';
-		div.appendChild(document.createTextNode('o'));
+		if (bar.getElementsByClassName('i' + element.element.name).length === 0) {
+			var div = document.createElement('div');
+			div.classList.add('indicator');
+			div.classList.add('i' + element.element.name);
+			div.style.top = (element.html.offsetTop) + 'px';
+			// div.style.left = (element.html.offsetWidth + (frame + 1) * timeline.space - 3) + 'px';
+			div.appendChild(document.createTextNode('o'));
 
-		bar.appendChild(div);
+			bar.appendChild(div);
+		}
 	}
 }
 
@@ -136,6 +187,7 @@ function UpdateFramebars(zoom) {
 		for (var i = currentBars; i < frames; i += 1) {
 			div = document.createElement('div');
 			div.className = 'timeline-frame';
+			div.id = 'frame-' + i;
 
 			timeline.framebars.appendChild(div);
 		}

@@ -28,7 +28,6 @@ Animator.prototype.init = function (data, spritesheets) {
 
 			var frame = new PIXI.Rectangle(col * spritesheet.tilewidth, row * spritesheet.tileheight, spritesheet.tilewidth, spritesheet.tileheight);
 
-			console.log('adding texture')
 			this.textures[index] = new PIXI.Texture(baseTexture, frame);
 
 			index = textures.shift();

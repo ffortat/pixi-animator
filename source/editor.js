@@ -36,6 +36,7 @@ var editorProperties = {
 	textureSize : 32
 }
 
+var indicatorGrabbed = null;
 var cursorGrabbed = false;
 var currentFrame = 0;
 var currentElement = null;
