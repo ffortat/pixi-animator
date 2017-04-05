@@ -84,6 +84,22 @@ Compositor.prototype.stop = function () {
 	}, this);
 }
 
+Compositor.prototype.displayBounds = function () {
+	this.elements.forEach(function (element) {
+		if (element.type === 'animator') {
+			element.displayBounds = true;
+		}
+	}, this);
+}
+
+Compositor.prototype.hideBounds = function () {
+	this.elements.forEach(function (element) {
+		if (element.type === 'animator') {
+			element.displayBounds = false;
+		}
+	}, this);
+}
+
 Compositor.prototype.goToFrame = function (frame) {
 	this.elements.forEach(function (element) {
 		element.goToFrame(frame);

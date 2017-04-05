@@ -3,26 +3,26 @@ function checkCurrentEmitterElement() {
 }
 
 function UpdateParticlesProperties() {
-	properties.particles.alpha.start.reset.style.fontWeight = '';
-	properties.particles.alpha.end.reset.style.fontWeight = '';
-	properties.particles.scale.reset.style.fontWeight = '';
-	properties.particles.scalemult.reset.style.fontWeight = '';
-	properties.particles.color.reset.style.fontWeight = '';
-	properties.particles.speed.reset.style.fontWeight = '';
-	properties.particles.speedmult.reset.style.fontWeight = '';
-	properties.particles.acceleration.reset.style.fontWeight = '';
-	properties.particles.speedmax.reset.style.fontWeight = '';
-	properties.particles.startrotation.reset.style.fontWeight = '';
-	properties.particles.norotation.reset.style.fontWeight = '';
-	properties.particles.rotationspeed.reset.style.fontWeight = '';
-	properties.particles.particlelifetime.reset.style.fontWeight = '';
-	properties.particles.blendmode.reset.style.fontWeight = '';
-	properties.particles.spawn.reset.style.fontWeight = '';
-	properties.particles.emitterlifetime.reset.style.fontWeight = '';
-	properties.particles.maxparticles.reset.style.fontWeight = '';
-	properties.particles.spawntype.reset.style.fontWeight = '';
-	properties.particles.position.reset.style.fontWeight = '';
-	properties.particles.queue.reset.style.fontWeight = '';
+	properties.particles.alpha.start.reset.classList.remove('active');
+	properties.particles.alpha.end.reset.classList.remove('active');
+	properties.particles.scale.reset.classList.remove('active');
+	properties.particles.scalemult.reset.classList.remove('active');
+	properties.particles.color.reset.classList.remove('active');
+	properties.particles.speed.reset.classList.remove('active');
+	properties.particles.speedmult.reset.classList.remove('active');
+	properties.particles.acceleration.reset.classList.remove('active');
+	properties.particles.speedmax.reset.classList.remove('active');
+	properties.particles.startrotation.reset.classList.remove('active');
+	properties.particles.norotation.reset.classList.remove('active');
+	properties.particles.rotationspeed.reset.classList.remove('active');
+	properties.particles.particlelifetime.reset.classList.remove('active');
+	properties.particles.blendmode.reset.classList.remove('active');
+	properties.particles.spawn.reset.classList.remove('active');
+	properties.particles.emitterlifetime.reset.classList.remove('active');
+	properties.particles.maxparticles.reset.classList.remove('active');
+	properties.particles.spawntype.reset.classList.remove('active');
+	properties.particles.position.reset.classList.remove('active');
+	properties.particles.queue.reset.classList.remove('active');
 
 	var propertiesData = {
 		name : currentElement.element.name

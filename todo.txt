@@ -1,7 +1,8 @@
 TODO
-	- Add frame around sprite in viewport (survol ou permanent)
+X - change style of active reset buttons
+X - Add frame around sprite in viewport (survol ou permanent)
 
-	- sprite interpolation (dynamic)
+X - sprite interpolation (dynamic)
 		- add indicator on which frame change (i grey ?)
 	- interpolation (%age ?) --> génère courbe
 		- linear
@@ -17,3 +18,9 @@ TODO
 
 	- Save as
 	- rename pivot to offset
+
+	- fix pivot tool => apply rotation to coordinate change ?
+
+TOFIX
+	- prevent creation of indicator on currentframe when moving an indicator
+	- remove indicators from old compositor when creating new one

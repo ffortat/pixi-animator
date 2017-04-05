@@ -5,6 +5,10 @@ function Animator(animation, spritesheets) {
 	this.textures = [];
 	this.timeline = [];
 
+	this.canvas = new PIXI.Graphics();
+
+	this.displayBounds = false;
+
 	this.init(animation, spritesheets);
 }
 
@@ -20,22 +24,34 @@ Animator.prototype.init = function (data, spritesheets) {
 		var maxIndex = spritesheet.firstindex + (indexWidth * indexHeight);
 		var index = textures.shift();
 
-		while (index !== undefined && index >= spritesheet.firstindex && index < maxIndex) {
-			var localIndex = index - spritesheet.firstindex;
+		// TODO don't load all the textures but do a smart selection in the editor when adding / removing a texture with previous frame having interpolation
+		for (var i = spritesheet.firstindex; i < maxIndex; i += 1) {
+			var localIndex = i - spritesheet.firstindex;
 
 			var row = Math.floor(localIndex / indexWidth);
 			var col = localIndex % indexWidth;
 
 			var frame = new PIXI.Rectangle(col * spritesheet.tilewidth, row * spritesheet.tileheight, spritesheet.tilewidth, spritesheet.tileheight);
 
-			this.textures[index] = new PIXI.Texture(baseTexture, frame);
-
-			index = textures.shift();
+			this.textures[i] = new PIXI.Texture(baseTexture, frame);
 		}
 
-		if (index !== undefined) {
-			textures.unshift(index);
-		}
+		// while (index !== undefined && index >= spritesheet.firstindex && index < maxIndex) {
+		// 	var localIndex = index - spritesheet.firstindex;
+
+		// 	var row = Math.floor(localIndex / indexWidth);
+		// 	var col = localIndex % indexWidth;
+
+		// 	var frame = new PIXI.Rectangle(col * spritesheet.tilewidth, row * spritesheet.tileheight, spritesheet.tilewidth, spritesheet.tileheight);
+
+		// 	this.textures[index] = new PIXI.Texture(baseTexture, frame);
+
+		// 	index = textures.shift();
+		// }
+
+		// if (index !== undefined) {
+		// 	textures.unshift(index);
+		// }
 	}, this);
 
 	data.timeline.forEach(function (frame, index) {
@@ -50,10 +66,13 @@ Animator.prototype.init = function (data, spritesheets) {
 		}
 	}, this);
 
+	this.interpolateInteger('texture');
 	this.interpolate('position');
 	this.interpolate('rotation');
 	this.interpolate('scale');
 	this.interpolate('alpha');
+
+	this.addChild(this.canvas);
 }
 
 Animator.prototype.interpolate = function (property) {
@@ -107,6 +126,56 @@ Animator.prototype.interpolate = function (property) {
 				}
 			}
 
+			index = i - 1;
+		}
+	};
+}
+
+Animator.prototype.interpolateInteger = function (property) {
+	var frame;
+	
+	for (var index = 0; index < this.timeline.length; index += 1) {
+		frame = this.timeline[index];
+
+		console.log(property, frame);
+
+		if (frame && frame[property] !== undefined && frame[property + 'Interpolate']) {
+			console.log(frame[property], frame[property + 'Interpolate']);
+			var i = index + 1;
+			var target = null
+
+			while (i < this.timeline.length && target === null) {
+				if (this.timeline[i] && this.timeline[i][property] !== undefined) {
+					target = this.timeline[i][property];
+				} else {
+					i += 1;
+				}
+			}
+
+			if (target !== null && i > index + 1) {
+				var delta = (target - frame[property]) / (i - index);
+				var previousValue = frame[property];
+				var value = previousValue;
+				
+
+				for (var j = index + 1; j < i; j += 1) {
+					value = Math.floor(frame[property] + delta * (j - index));
+
+					console.log(target, j, i, delta, value);
+
+					if (value !== previousValue) {
+						if (!this.timeline[j]) {
+							this.timeline[j] = {};
+						}
+
+						this.timeline[j][property] = value;
+						previousValue = value;
+
+						console.log(this.timeline[j][property]);
+					}
+				}
+			}
+			
 			index = i - 1;
 		}
 	};
@@ -181,10 +250,18 @@ Animator.prototype.goToFrame = function (frame) {
 
 	if (scale) {
 		this.scale = new PIXI.Point(scale.x, scale.y);
+		this.canvas.scale = new PIXI.Point(1 / Math.abs(this.scale.x), 1 / Math.abs(this.scale.y));
 	}
 
 	if (alpha !== undefined) {
 		this.alpha = alpha;
+	}
+
+	if (this.displayBounds) {
+		this.canvas.clear();
+
+		this.canvas.lineStyle(1, 0xFF0000, 1);
+		this.canvas.drawRect(0, 0, this.width, this.height);
 	}
 }
 
@@ -216,10 +293,18 @@ Animator.prototype.tick = function (frame) {
 
 		if (frame.scale) {
 			this.scale = new PIXI.Point(frame.scale.x, frame.scale.y);
+			this.canvas.scale = new PIXI.Point(1 / Math.abs(this.scale.x), 1 / Math.abs(this.scale.y));
 		}
 
 		if (frame.alpha !== undefined) {
 			this.alpha = frame.alpha;
+		}
+
+		if (this.displayBounds) {
+			this.canvas.clear();
+
+			this.canvas.lineStyle(1, 0xFF0000, 1);
+			this.canvas.drawRect(0, 0, this.width, this.height);
 		}
 	}
 }

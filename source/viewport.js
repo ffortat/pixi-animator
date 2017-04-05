@@ -175,6 +175,7 @@ function refreshCompositor() {
 	subContainer.removeChild(compositor);
 
 	compositor = new Compositor(compositorData);
+	compositor.displayBounds();
 
 	subContainer.addChild(compositor);
 	subContainer.swapChildren(compositor, pivot);

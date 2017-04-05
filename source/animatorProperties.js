@@ -15,13 +15,15 @@ function checkSetCurrentAnimatorElement() {
 }
 
 function UpdateAnimatorProperties() {
-	properties.animator.texture.reset.style.fontWeight = '';
-	properties.animator.blendmode.reset.style.fontWeight = '';
-	properties.animator.pivot.reset.style.fontWeight = '';
-	properties.animator.position.reset.style.fontWeight = '';
-	properties.animator.rotation.reset.style.fontWeight = '';
-	properties.animator.scale.reset.style.fontWeight = '';
-	properties.animator.alpha.reset.style.fontWeight = '';
+	properties.animator.texture.interpolation.classList.remove('active');
+
+	properties.animator.texture.reset.classList.remove('active');
+	properties.animator.blendmode.reset.classList.remove('active');
+	properties.animator.pivot.reset.classList.remove('active');
+	properties.animator.position.reset.classList.remove('active');
+	properties.animator.rotation.reset.classList.remove('active');
+	properties.animator.scale.reset.classList.remove('active');
+	properties.animator.alpha.reset.classList.remove('active');
 
 	var defaultProperties = {
 		texture : 'none',
@@ -49,7 +51,11 @@ function UpdateAnimatorProperties() {
 					propertiesData.texture = frameData.texture;
 
 					if (i === currentFrame) {
-						properties.animator.texture.reset.style.fontWeight = 'bold';
+						properties.animator.texture.reset.classList.add('active');
+
+						if (frameData.textureInterpolate) {
+							properties.animator.texture.interpolation.classList.add('active');
+						}
 					}
 				}
 			}
@@ -60,7 +66,7 @@ function UpdateAnimatorProperties() {
 					propertiesData.blendmode = frameData.blendmode;
 
 					if (i === currentFrame) {
-						properties.animator.blendmode.reset.style.fontWeight = 'bold';
+						properties.animator.blendmode.reset.classList.add('active');
 					}
 				}
 			}
@@ -71,7 +77,7 @@ function UpdateAnimatorProperties() {
 					propertiesData.pivot = {x : frameData.pivot.x, y : frameData.pivot.y};
 
 					if (i === currentFrame) {
-						properties.animator.pivot.reset.style.fontWeight = 'bold';
+						properties.animator.pivot.reset.classList.add('active');
 					}
 				}
 			}
@@ -82,7 +88,7 @@ function UpdateAnimatorProperties() {
 					propertiesData.position = {x : frameData.position.x, y : frameData.position.y};
 
 					if (i === currentFrame) {
-						properties.animator.position.reset.style.fontWeight = 'bold';
+						properties.animator.position.reset.classList.add('active');
 					}
 				}
 			}
@@ -93,7 +99,7 @@ function UpdateAnimatorProperties() {
 					propertiesData.rotation = frameData.rotation;
 
 					if (i === currentFrame) {
-						properties.animator.rotation.reset.style.fontWeight = 'bold';
+						properties.animator.rotation.reset.classList.add('active');
 					}
 				}
 			}
@@ -104,7 +110,7 @@ function UpdateAnimatorProperties() {
 					propertiesData.scale = {x : frameData.scale.x, y : frameData.scale.y};
 
 					if (i === currentFrame) {
-						properties.animator.scale.reset.style.fontWeight = 'bold';
+						properties.animator.scale.reset.classList.add('active');
 					}
 				}
 			}
@@ -115,7 +121,7 @@ function UpdateAnimatorProperties() {
 					propertiesData.alpha = frameData.alpha;
 
 					if (i === currentFrame) {
-						properties.animator.alpha.reset.style.fontWeight = 'bold';
+						properties.animator.alpha.reset.classList.add('active');
 					}
 				}
 			}
@@ -178,6 +184,20 @@ function UseAnimatorTexture(event) {
 		}
 
 		updateCompositor();
+	}
+}
+
+function SetInterpolationTexture(event) {
+	if (checkCurrentAnimatorElement()) {
+		if (currentElement.element.timeline[currentFrame].texture !== undefined) {
+			if (currentElement.element.timeline[currentFrame].textureInterpolate) {
+				delete currentElement.element.timeline[currentFrame].textureInterpolate;
+			} else {
+				currentElement.element.timeline[currentFrame].textureInterpolate = true;
+			}
+
+			updateCompositor();
+		}
 	}
 }
 
@@ -314,7 +334,8 @@ function CreateAnimatorProperties() {
 	properties.animator = document.getElementById('animatorProperties');
 
 	properties.animator.texture = document.getElementById('texture-id');
-	properties.animator.texture.reset = properties.animator.texture.previousElementSibling;
+	properties.animator.texture.interpolation = properties.animator.texture.previousElementSibling;
+	properties.animator.texture.reset = properties.animator.texture.interpolation.previousElementSibling;
 
 	properties.animator.blendmode = document.getElementById('blend-mode');
 	properties.animator.blendmode.reset = properties.animator.blendmode.previousElementSibling;
@@ -382,4 +403,6 @@ function CreateAnimatorProperties() {
 	properties.animator.rotation.reset.addEventListener('click', ResetAnimatorValue);
 	properties.animator.scale.reset.addEventListener('click', ResetAnimatorValue);
 	properties.animator.alpha.reset.addEventListener('click', ResetAnimatorValue);
+
+	properties.animator.texture.interpolation.addEventListener('click', SetInterpolationTexture);
 }

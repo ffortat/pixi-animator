@@ -98,6 +98,23 @@ canvas {
 #leftpanel .reset:hover {
 	color: #000;
 }
+#leftpanel .reset.active {
+	font-weight : bolder;
+	color: #000;
+}
+#leftpanel .reset.active:hover {
+	color: #888;
+}
+#leftpanel .interpolation {
+	width: 20px;
+	padding: 0;
+	color: #ccc;
+	text-shadow: 0 1px #fff;
+}
+#leftpanel .interpolation.active {
+	font-weight : bolder;
+	color: #000;
+}
 
 /*	Right panel	*/
 #rightpanel {

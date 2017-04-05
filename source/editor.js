@@ -63,6 +63,8 @@ function LoadEditor(name) {
 				LoadSpritesheetData(spritesheet.file, spritesheet.data, spritesheet.tilewidth, spritesheet.tileheight);
 			});
 
+			compositorData.spritesheets = spritesheetLists.save;
+
 			compositorData.elements.forEach(function (element, index) {
 				var item = CreateItem(element.name, element.type);
 				
